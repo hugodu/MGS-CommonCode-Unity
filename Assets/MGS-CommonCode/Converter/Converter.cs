@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 namespace Mogoson.Converter
 {
     /// <summary>
-    /// Converter of byte data.
+    /// Converter of byte array.
     /// </summary>
     public static class ByteConverter
     {
@@ -28,7 +28,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Boolean count.</param>
-        public static bool[] ByteArrayToBooleanArray(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Boolean array.</returns>
+        public static bool[] ToBoolean(byte[] bytes, int start = 0, int count = 1)
         {
             //1(1 byte to a Boolean)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 1)
@@ -50,7 +51,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Int16 count.</param>
-        public static short[] ByteArrayToInt16Array(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Int16 array.</returns>
+        public static short[] ToInt16(byte[] bytes, int start = 0, int count = 1)
         {
             //2(2 bytes to a Int16)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 2)
@@ -72,7 +74,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Int32 count.</param>
-        public static int[] ByteArrayToInt32Array(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Int32 array.</returns>
+        public static int[] ToInt32(byte[] bytes, int start = 0, int count = 1)
         {
             //4(4 bytes to a Int32)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 4)
@@ -94,7 +97,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Int64 count.</param>
-        public static long[] ByteArrayToInt64Array(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Int64 array.</returns>
+        public static long[] ToInt64(byte[] bytes, int start = 0, int count = 1)
         {
             //8(8 bytes to a Int64)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 8)
@@ -116,7 +120,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Char count.</param>
-        public static char[] ByteArrayToCharArray(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Char array.</returns>
+        public static char[] ToChar(byte[] bytes, int start = 0, int count = 1)
         {
             //2(2 bytes to a Char)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 2)
@@ -138,7 +143,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Single count.</param>
-        public static float[] ByteArrayToSingleArray(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Single array.</returns>
+        public static float[] ToSingle(byte[] bytes, int start = 0, int count = 1)
         {
             //4(4 bytes to a Single)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 4)
@@ -160,7 +166,8 @@ namespace Mogoson.Converter
         /// <param name="bytes">Bytes array.</param>
         /// <param name="start">Start index.</param>
         /// <param name="count">Convert Double count.</param>
-        public static double[] ByteArrayToDoubleArray(byte[] bytes, int start = 0, int count = 1)
+        /// <returns>Double array.</returns>
+        public static double[] ToDouble(byte[] bytes, int start = 0, int count = 1)
         {
             //8(8 bytes to a Double)
             if (bytes == null || bytes.Length == 0 || count == 0 || start > bytes.Length - 8)
@@ -191,7 +198,7 @@ namespace Mogoson.Converter
         /// <param name="row">Two dimention array's row.</param>
         /// <param name="column">Two dimention array's column.</param>
         /// <returns>Two dimentions array.</returns>
-        public static T[,] ToTwoDimentionArray<T>(T[] array, int row, int column)
+        public static T[,] ToTwoDimention<T>(T[] array, int row, int column)
         {
             if (array == null || array.Length == 0 || row * column != array.Length)
                 return null;
@@ -218,7 +225,7 @@ namespace Mogoson.Converter
         /// <param name="row">Three dimention array's row.</param>
         /// <param name="column">Three dimention array's column.</param>
         /// <returns>Three dimentions array.</returns>
-        public static T[,,] ToThreeDimentionArray<T>(T[] array, int layer, int row, int column)
+        public static T[,,] ToThreeDimention<T>(T[] array, int layer, int row, int column)
         {
             if (array == null || array.Length == 0 || row * column * layer != array.Length)
                 return null;
@@ -245,7 +252,7 @@ namespace Mogoson.Converter
         /// <typeparam name="T">Element type.</typeparam>
         /// <param name="array">Source array.</param>
         /// <returns>One dimentions array.</returns>
-        public static T[] ToOneDimentionArray<T>(T[,] array)
+        public static T[] ToOneDimention<T>(T[,] array)
         {
             if (array == null || array.Length == 0)
                 return null;
@@ -269,7 +276,7 @@ namespace Mogoson.Converter
         /// <typeparam name="T">Element type.</typeparam>
         /// <param name="array">Source array.</param>
         /// <returns>One dimentions array.</returns>
-        public static T[] ToOneDimentionArray<T>(T[,,] array)
+        public static T[] ToOneDimention<T>(T[,,] array)
         {
             if (array == null || array.Length == 0)
                 return null;
@@ -302,8 +309,8 @@ namespace Mogoson.Converter
         /// </summary>
         /// <typeparam name="T">Structure type.</typeparam>
         /// <param name="byteArray">Byte array.</param>
-        /// <returns>Convert structure.</returns>
-        public static T ByteArrayToStructure<T>(byte[] byteArray) where T : struct
+        /// <returns>Structure.</returns>
+        public static T FromByteArray<T>(byte[] byteArray) where T : struct
         {
             if (byteArray == null || byteArray.Length == 0)
                 return default(T);
@@ -325,7 +332,7 @@ namespace Mogoson.Converter
         /// <typeparam name="T">Structure type.</typeparam>
         /// <param name="structure">Structure.</param>
         /// <returns>Byte array.</returns>
-        public static byte[] StructureToByteArray<T>(T structure) where T : struct
+        public static byte[] ToByteArray<T>(T structure) where T : struct
         {
             var size = Marshal.SizeOf(structure);
             if (size == 0)
