@@ -35,7 +35,7 @@ namespace Mogoson.Machinery
     /// <summary>
     /// Base mechanism.
     /// </summary>
-    public abstract class Mechanism : MonoBehaviour
+    public abstract class Mechanism : MonoBehaviour, IMechanism
     {
         #region Protected Method
         protected virtual void Awake()
