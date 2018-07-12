@@ -33,7 +33,7 @@ namespace Mogoson.CurvePipe
         /// <summary>
         /// Max time of pipe curve.
         /// </summary>
-        public override float MaxTime { get { return 1.0f; } }
+        public override float MaxKey { get { return 1.0f; } }
 
         /// <summary>
         /// Start point of pipe curve.

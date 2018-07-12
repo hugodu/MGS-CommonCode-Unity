@@ -21,9 +21,9 @@ namespace Mogoson.CurvePath
     {
         #region Field and Property
         /// <summary>
-        /// Max time of path curve.
+        /// Max key of path curve.
         /// </summary>
-        public abstract float MaxTime { get; }
+        public abstract float MaxKey { get; }
         #endregion
 
         #region Protected Method
@@ -45,11 +45,11 @@ namespace Mogoson.CurvePath
         public abstract void Rebuild();
 
         /// <summary>
-        /// Get point on path curve at time.
+        /// Get point on path curve at key.
         /// </summary>
-        /// <param name="time">Time of curve.</param>
-        /// <returns>The point on path curve at time.</returns>
-        public abstract Vector3 GetPointAt(float time);
+        /// <param name="key">Key of curve.</param>
+        /// <returns>The point on path curve at key.</returns>
+        public abstract Vector3 GetPointAt(float key);
         #endregion
     }
 }

@@ -19,6 +19,13 @@ namespace Mogoson.Curve
     /// </summary>
     public interface ICurve
     {
+        #region Property
+        /// <summary>
+        /// Max key of curve.
+        /// </summary>
+        float MaxKey { get; }
+        #endregion
+
         #region Method
         /// <summary>
         /// Get point on curve at key.

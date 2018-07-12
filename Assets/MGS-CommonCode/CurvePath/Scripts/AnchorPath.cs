@@ -53,12 +53,12 @@ namespace Mogoson.CurvePath
         /// <summary>
         /// Max time of path curve.
         /// </summary>
-        public override float MaxTime
+        public override float MaxKey
         {
             get
             {
-                if (curve.Length > 0)
-                    return curve[curve.Length - 1].time;
+                if (curve.KeyframeCount > 0)
+                    return curve[curve.KeyframeCount - 1].time;
                 else
                     return 0;
             }

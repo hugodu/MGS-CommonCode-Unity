@@ -39,11 +39,6 @@ namespace Mogoson.CurvePipe
         /// Is seal at both ends of pipe?
         /// </summary>
         bool Seal { set; get; }
-
-        /// <summary>
-        /// Max time of pipe center curve.
-        /// </summary>
-        float MaxTime { get; }
         #endregion
     }
 }

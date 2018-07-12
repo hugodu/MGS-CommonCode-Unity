@@ -57,7 +57,7 @@ namespace Mogoson.Curve
     /// </summary>
     public class VectorAnimationCurve : ICurve
     {
-        #region Field and Property
+        #region Indexer
         public VectorKeyframe this[int index]
         {
             get
@@ -65,11 +65,27 @@ namespace Mogoson.Curve
                 return new VectorKeyframe(xCurve[index].time, new Vector3(xCurve[index].value, yCurve[index].value, zCurve[index].value));
             }
         }
+        #endregion
+
+        #region Field and Property
+        /// <summary>
+        /// Count of Keyframes.
+        /// </summary>
+        public int KeyframeCount { get { return xCurve.length; } }
 
         /// <summary>
-        /// Keyframe count.
+        /// Max key of curve.
         /// </summary>
-        public int Length { get { return xCurve.length; } }
+        public float MaxKey
+        {
+            get
+            {
+                if (KeyframeCount > 0)
+                    return xCurve[KeyframeCount - 1].time;
+                else
+                    return 0;
+            }
+        }
 
         /// <summary>
         /// The behaviour of the animation after the last keyframe.
@@ -103,45 +119,35 @@ namespace Mogoson.Curve
         }
 
         /// <summary>
-        /// Add a new key to the curve.
+        /// Add a new keyframe to the curve.
         /// </summary>
-        /// <param name="key">The key to add to the curve.</param>
-        /// <returns>The index of the added key, or -1 if the key could not be added.</returns>
-        public int AddKey(VectorKeyframe key)
+        /// <param name="keyframe">The keyframe to add to the curve.</param>
+        /// <returns>The index of the added keyframe, or -1 if the keyframe could not be added.</returns>
+        public int AddKeyframe(VectorKeyframe keyframe)
         {
-            xCurve.AddKey(key.time, key.value.x);
-            yCurve.AddKey(key.time, key.value.y);
-            return zCurve.AddKey(key.time, key.value.z);
+            xCurve.AddKey(keyframe.time, keyframe.value.x);
+            yCurve.AddKey(keyframe.time, keyframe.value.y);
+            return zCurve.AddKey(keyframe.time, keyframe.value.z);
         }
 
         /// <summary>
-        /// Add a new key to the curve.
+        /// Add a new keyframe to the curve.
         /// </summary>
-        /// <param name="time">The time at which to add the key (horizontal axis in the curve graph).</param>
-        /// <param name="value">The value for the key (vertical axis in the curve graph).</param>
-        /// <returns>The index of the added key, or -1 if the key could not be added.</returns>
-        public int AddKey(float time, Vector3 value)
+        /// <param name="key">The key of the keyframe.</param>
+        /// <param name="value">The value of the keyframe.</param>
+        /// <returns>The index of the added keyframe, or -1 if the keyframe could not be added.</returns>
+        public int AddKeyframe(float key, Vector3 value)
         {
-            xCurve.AddKey(time, value.x);
-            yCurve.AddKey(time, value.y);
-            return zCurve.AddKey(time, value.z);
+            xCurve.AddKey(key, value.x);
+            yCurve.AddKey(key, value.y);
+            return zCurve.AddKey(key, value.z);
         }
 
         /// <summary>
-        /// Get point by evaluate the curve at time.
+        /// Removes a keyframe.
         /// </summary>
-        /// <param name="time">The time within the curve you want to evaluate (the horizontal axis in the curve graph).</param>
-        /// <returns>The value of the curve, at the point in time specified.</returns>
-        public Vector3 GetPointAt(float time)
-        {
-            return new Vector3(xCurve.Evaluate(time), yCurve.Evaluate(time), zCurve.Evaluate(time));
-        }
-
-        /// <summary>
-        /// Removes a key.
-        /// </summary>
-        /// <param name="index">The index of the key to remove.</param>
-        public void RemoveKey(int index)
+        /// <param name="index">The index of the keyframe to remove.</param>
+        public void RemoveKeyframe(int index)
         {
             xCurve.RemoveKey(index);
             yCurve.RemoveKey(index);
@@ -151,7 +157,7 @@ namespace Mogoson.Curve
         /// <summary>
         /// Smooth the in and out tangents of the keyframe at index.
         /// </summary>
-        /// <param name="index">The index of the keyframe to be smoothed.</param>
+        /// <param name="index">The index of the keyframe.</param>
         /// <param name="weight">The smoothing weight to apply to the keyframe's tangents.</param>
         public void SmoothTangents(int index, float weight)
         {
@@ -166,10 +172,20 @@ namespace Mogoson.Curve
         /// <param name="weight">The smoothing weight to apply to the keyframe's tangents.</param>
         public void SmoothTangents(float weight)
         {
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < KeyframeCount; i++)
             {
                 SmoothTangents(i, weight);
             }
+        }
+
+        /// <summary>
+        /// Get point by evaluate the curve at key.
+        /// </summary>
+        /// <param name="key">The key within the curve you want to evaluate.</param>
+        /// <returns>The point on the curve at the key.</returns>
+        public Vector3 GetPointAt(float key)
+        {
+            return new Vector3(xCurve.Evaluate(key), yCurve.Evaluate(key), zCurve.Evaluate(key));
         }
         #endregion
 
@@ -193,18 +209,18 @@ namespace Mogoson.Curve
                 var time = 0f;
                 for (int i = 0; i < anchors.Length - 1; i++)
                 {
-                    curve.AddKey(time, anchors[i]);
+                    curve.AddKeyframe(time, anchors[i]);
                     time += Vector3.Distance(anchors[i], anchors[i + 1]);
                 }
 
                 //Add the last key.
-                curve.AddKey(time, anchors[anchors.Length - 1]);
+                curve.AddKeyframe(time, anchors[anchors.Length - 1]);
 
                 if (close)
                 {
                     //Add the close key(the first key).
                     time += Vector3.Distance(anchors[anchors.Length - 1], anchors[0]);
-                    curve.AddKey(time, anchors[0]);
+                    curve.AddKeyframe(time, anchors[0]);
                 }
 
                 //Smooth curve keys out tangent.

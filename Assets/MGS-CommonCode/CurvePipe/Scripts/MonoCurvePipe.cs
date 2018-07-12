@@ -110,9 +110,9 @@ namespace Mogoson.CurvePipe
         }
 
         /// <summary>
-        /// Max time of pipe center curve.
+        /// Max key of pipe center curve.
         /// </summary>
-        public abstract float MaxTime { get; }
+        public abstract float MaxKey { get; }
         #endregion
 
         #region Protected Method
@@ -222,7 +222,7 @@ namespace Mogoson.CurvePipe
         /// <returns>Local point on pipe curve at t.</returns>
         protected Vector3 GetLocalPoint(float t)
         {
-            return GetLocalPointAt(MaxTime * t);
+            return GetLocalPointAt(MaxKey * t);
         }
 
         /// <summary>
@@ -235,13 +235,13 @@ namespace Mogoson.CurvePipe
 
         #region Public Method
         /// <summary>
-        /// Get point from center curve of pipe at time.
+        /// Get point from center curve of pipe at key.
         /// </summary>
-        /// <param name="time">Time of pipe center curve.</param>
-        /// <returns>Point on pipe curve at time.</returns>
-        public Vector3 GetPointAt(float time)
+        /// <param name="key">Key of pipe center curve.</param>
+        /// <returns>Point on pipe curve at key.</returns>
+        public Vector3 GetPointAt(float key)
         {
-            return transform.TransformPoint(GetLocalPointAt(time));
+            return transform.TransformPoint(GetLocalPointAt(key));
         }
         #endregion
     }

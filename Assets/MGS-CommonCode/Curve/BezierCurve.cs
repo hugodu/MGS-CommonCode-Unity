@@ -138,9 +138,31 @@ namespace Mogoson.Curve
     }
 
     /// <summary>
+    /// Bezier curve.
+    /// </summary>
+    public abstract class BezierCurve : ICurve
+    {
+        #region Field and Property
+        /// <summary>
+        /// Max key of curve.
+        /// </summary>
+        public float MaxKey { get { return 1.0f; } }
+        #endregion
+
+        #region Public Method
+        /// <summary>
+        /// Get point on curve at key.
+        /// </summary>
+        /// <param name="key">Key of curve.</param>
+        /// <returns>The point on curve at key.</returns>
+        public abstract Vector3 GetPointAt(float key);
+        #endregion
+    }
+
+    /// <summary>
     /// Linear bezier curve.
     /// </summary>
-    public struct LinearBezierCurve : ICurve
+    public class LinearBezierCurve : BezierCurve
     {
         #region Field and Property
         /// <summary>
@@ -164,7 +186,7 @@ namespace Mogoson.Curve
         /// </summary>
         /// <param name="t">t is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
-        public Vector3 GetPointAt(float t)
+        public override Vector3 GetPointAt(float t)
         {
             return GetPointAt(anchor, t);
         }
@@ -187,7 +209,7 @@ namespace Mogoson.Curve
     /// <summary>
     /// Quadratic bezier curve.
     /// </summary>
-    public struct QuadraticBezierCurve : ICurve
+    public class QuadraticBezierCurve : BezierCurve
     {
         #region Field and Property
         /// <summary>
@@ -211,7 +233,7 @@ namespace Mogoson.Curve
         /// </summary>
         /// <param name="t">t is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
-        public Vector3 GetPointAt(float t)
+        public override Vector3 GetPointAt(float t)
         {
             return GetPointAt(anchor, t);
         }
@@ -234,7 +256,7 @@ namespace Mogoson.Curve
     /// <summary>
     /// Cubic bezier curve.
     /// </summary>
-    public struct CubicBezierCurve : ICurve
+    public class CubicBezierCurve : BezierCurve
     {
         #region Field and Property
         /// <summary>
@@ -258,7 +280,7 @@ namespace Mogoson.Curve
         /// </summary>
         /// <param name="t">t is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
-        public Vector3 GetPointAt(float t)
+        public override Vector3 GetPointAt(float t)
         {
             return GetPointAt(anchor, t);
         }
