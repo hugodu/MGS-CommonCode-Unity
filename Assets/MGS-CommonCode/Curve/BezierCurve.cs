@@ -2,7 +2,7 @@
  *  Copyright © 2017-2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
  *  File         :  BezierCurve.cs
- *  Description  :  Define BezierCurve.
+ *  Description  :  Define bezier curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
