@@ -28,12 +28,12 @@ namespace Mogoson.Curve
     {
         #region Field and Property
         /// <summary>
-        /// Time of key frame.
+        /// Time of keyframe.
         /// </summary>
         public float time;
 
         /// <summary>
-        /// Value of key frame.
+        /// Value of keyframe.
         /// </summary>
         public Vector3 value;
         #endregion
@@ -42,8 +42,8 @@ namespace Mogoson.Curve
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="time">Time of key frame.</param>
-        /// <param name="value">Value of key frame.</param>
+        /// <param name="time">Time of keyframe.</param>
+        /// <param name="value">Value of keyframe.</param>
         public VectorKeyframe(float time, Vector3 value)
         {
             this.time = time;
@@ -111,6 +111,9 @@ namespace Mogoson.Curve
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public VectorAnimationCurve()
         {
             xCurve = new AnimationCurve();

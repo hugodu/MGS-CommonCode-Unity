@@ -153,7 +153,7 @@ namespace Mogoson.Curve
         /// <summary>
         /// Get point on curve at key.
         /// </summary>
-        /// <param name="key">Key of curve.</param>
+        /// <param name="key">Key is in the range(0~1).</param>
         /// <returns>The point on curve at key.</returns>
         public abstract Vector3 GetPointAt(float key);
         #endregion
@@ -182,26 +182,26 @@ namespace Mogoson.Curve
         }
 
         /// <summary>
-        /// Get curve point base on t.
+        /// Get point on curve at key.
         /// </summary>
-        /// <param name="t">t is in the range(0~1).</param>
-        /// <returns>Point on curve.</returns>
-        public override Vector3 GetPointAt(float t)
+        /// <param name="key">Key is in the range(0~1).</param>
+        /// <returns>The point on curve at key.</returns>
+        public override Vector3 GetPointAt(float key)
         {
-            return GetPointAt(anchor, t);
+            return GetPointAt(anchor, key);
         }
         #endregion
 
         #region Static Method
         /// <summary>
-        /// Get curve point base on anchor points and t.
+        /// Get curve point base on anchor points and key.
         /// </summary>
         /// <param name="anchor">Anchor points of curve.</param>
-        /// <param name="t">t is in the range(0~1).</param>
+        /// <param name="key">Key is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
-        public static Vector3 GetPointAt(LinearBezierAnchor anchor, float t)
+        public static Vector3 GetPointAt(LinearBezierAnchor anchor, float key)
         {
-            return (1 - t) * anchor.start + t * anchor.end;
+            return (1 - key) * anchor.start + key * anchor.end;
         }
         #endregion
     }
@@ -229,22 +229,22 @@ namespace Mogoson.Curve
         }
 
         /// <summary>
-        /// Get curve point base on t.
+        /// Get point on curve at key.
         /// </summary>
-        /// <param name="t">t is in the range(0~1).</param>
-        /// <returns>Point on curve.</returns>
-        public override Vector3 GetPointAt(float t)
+        /// <param name="key">Key is in the range(0~1).</param>
+        /// <returns>The point on curve at key.</returns>
+        public override Vector3 GetPointAt(float key)
         {
-            return GetPointAt(anchor, t);
+            return GetPointAt(anchor, key);
         }
         #endregion
 
         #region Static Method
         /// <summary>
-        /// Get curve point base on anchor points and t.
+        /// Get curve point base on anchor points and key.
         /// </summary>
         /// <param name="anchor">Anchor points of curve.</param>
-        /// <param name="t">t is in the range(0~1).</param>
+        /// <param name="key">Key is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
         public static Vector3 GetPointAt(QuadraticBezierAnchor anchor, float t)
         {
@@ -276,22 +276,22 @@ namespace Mogoson.Curve
         }
 
         /// <summary>
-        /// Get curve point base on t.
+        /// Get point on curve at key.
         /// </summary>
-        /// <param name="t">t is in the range(0~1).</param>
-        /// <returns>Point on curve.</returns>
-        public override Vector3 GetPointAt(float t)
+        /// <param name="key">Key is in the range(0~1).</param>
+        /// <returns>The point on curve at key.</returns>
+        public override Vector3 GetPointAt(float key)
         {
-            return GetPointAt(anchor, t);
+            return GetPointAt(anchor, key);
         }
         #endregion
 
         #region Static Method
         /// <summary>
-        /// Get curve point base on anchor points and t.
+        /// Get curve point base on anchor points and key.
         /// </summary>
         /// <param name="anchor">Anchor points of curve.</param>
-        /// <param name="t">t is in the range(0~1).</param>
+        /// <param name="key">Key is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
         public static Vector3 GetPointAt(CubicBezierAnchor anchor, float t)
         {

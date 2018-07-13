@@ -21,7 +21,7 @@ namespace Mogoson.Curve
     {
         #region Field and Property
         /// <summary>
-        /// Center of circle.
+        /// Center of ellipse.
         /// </summary>
         public Vector3 center = Vector3.zero;
 
@@ -36,12 +36,18 @@ namespace Mogoson.Curve
         public float semiMajorAxis = 2.0f;
 
         /// <summary>
-        /// 
+        /// Max around radian of ellipse.
         /// </summary>
-        public float MaxKey { get { return 2 * Mathf.PI; } }
+        public virtual float MaxKey { get { return 2 * Mathf.PI; } }
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="center">Center of ellipse.</param>
+        /// <param name="semiMinorAxis">Semi minor axis of ellipse.</param>
+        /// <param name="semiMajorAxis">Semi major axis of ellipse.</param>
         public EllipseCurve(Vector3 center, float semiMinorAxis, float semiMajorAxis)
         {
             this.center = center;
@@ -50,13 +56,13 @@ namespace Mogoson.Curve
         }
 
         /// <summary>
-        /// 
+        /// Get point on ellipse at around radian.
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Vector3 GetPointAt(float key)
+        /// <param name="radian">Around radian of ellipse.</param>
+        /// <returns>The point on ellipse at around radian.</returns>
+        public virtual Vector3 GetPointAt(float radian)
         {
-            return center + new Vector3(semiMinorAxis * Mathf.Cos(key), 0, semiMajorAxis * Mathf.Sin(key));
+            return center + new Vector3(semiMinorAxis * Mathf.Cos(radian), 0, semiMajorAxis * Mathf.Sin(radian));
         }
         #endregion
     }
