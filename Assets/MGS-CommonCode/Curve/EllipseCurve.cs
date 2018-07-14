@@ -10,10 +10,50 @@
  *  Description  :  Initial development version.
  *************************************************************************/
 
+using System;
 using UnityEngine;
 
 namespace Mogoson.Curve
 {
+    /// <summary>
+    /// Info of ellipse.
+    /// </summary>
+    [Serializable]
+    public struct EllipseInfo
+    {
+        #region Field and Property
+        /// <summary>
+        /// Center of ellipse.
+        /// </summary>
+        public Vector3 center;
+
+        /// <summary>
+        /// Semi minor axis of ellipse.
+        /// </summary>
+        public float semiMinorAxis;
+
+        /// <summary>
+        /// Semi major axis of ellipse.
+        /// </summary>
+        public float semiMajorAxis;
+        #endregion
+
+        #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="center">Center of ellipse.</param>
+        /// <param name="semiMinorAxis">Semi minor axis of ellipse.</param>
+        /// <param name="semiMajorAxis">Semi major axis of ellipse.</param>
+        public EllipseInfo(Vector3 center, float semiMinorAxis, float semiMajorAxis)
+        {
+            this.center = center;
+            this.semiMinorAxis = semiMinorAxis;
+            this.semiMajorAxis = semiMajorAxis;
+        }
+        #endregion
+    }
+
     /// <summary>
     /// Ellipse curve.
     /// </summary>
@@ -21,19 +61,9 @@ namespace Mogoson.Curve
     {
         #region Field and Property
         /// <summary>
-        /// Center of ellipse.
+        /// Ellipse info of curve.
         /// </summary>
-        public Vector3 center = Vector3.zero;
-
-        /// <summary>
-        /// Semi minor axis of ellipse.
-        /// </summary>
-        public float semiMinorAxis = 1.0f;
-
-        /// <summary>
-        /// Semi major axis of ellipse.
-        /// </summary>
-        public float semiMajorAxis = 2.0f;
+        public EllipseInfo ellipse = new EllipseInfo();
 
         /// <summary>
         /// Max around radian of ellipse.
@@ -45,14 +75,10 @@ namespace Mogoson.Curve
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="center">Center of ellipse.</param>
-        /// <param name="semiMinorAxis">Semi minor axis of ellipse.</param>
-        /// <param name="semiMajorAxis">Semi major axis of ellipse.</param>
-        public EllipseCurve(Vector3 center, float semiMinorAxis, float semiMajorAxis)
+        /// <param name="ellipse">Ellipse info of curve.</param>
+        public EllipseCurve(EllipseInfo ellipse)
         {
-            this.center = center;
-            this.semiMinorAxis = semiMinorAxis;
-            this.semiMajorAxis = semiMajorAxis;
+            this.ellipse = ellipse;
         }
 
         /// <summary>
@@ -62,7 +88,20 @@ namespace Mogoson.Curve
         /// <returns>The point on ellipse at around radian.</returns>
         public virtual Vector3 GetPointAt(float radian)
         {
-            return center + new Vector3(semiMinorAxis * Mathf.Cos(radian), 0, semiMajorAxis * Mathf.Sin(radian));
+            return GetPointAt(ellipse, radian);
+        }
+        #endregion
+
+        #region Static Method
+        /// <summary>
+        /// Get point on ellipse at around radian.
+        /// </summary>
+        /// <param name="ellipse">Ellipse info of curve.</param>
+        /// <param name="radian">Around radian of ellipse.</param>
+        /// <returns>The point on ellipse at around radian.</returns>
+        public static Vector3 GetPointAt(EllipseInfo ellipse, float radian)
+        {
+            return ellipse.center + new Vector3(ellipse.semiMinorAxis * Mathf.Cos(radian), 0, ellipse.semiMajorAxis * Mathf.Sin(radian));
         }
         #endregion
     }

@@ -23,54 +23,18 @@ namespace Mogoson.CurvePath
     {
         #region Field and Property
         /// <summary>
-        /// Semi Minor Axis of ellipse.
+        /// Ellipse info of path curve.
         /// </summary>
-        [SerializeField]
-        protected float semiMinorAxis = 1.0f;
-
-        /// <summary>
-        /// Semi Major Axis of ellipse.
-        /// </summary>
-        [SerializeField]
-        protected float semiMajorAxis = 2.0f;
+        public EllipseInfo ellipse = new EllipseInfo(Vector3.zero, 1.0f, 1.0f);
 
         /// <summary>
         /// Max key of path curve.
         /// </summary>
-        public override float MaxKey { get { return curve.MaxKey; } }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public float SemiMinorAxis
-        {
-            set { curve.semiMinorAxis = semiMinorAxis = value; }
-            get { return semiMinorAxis; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public float SemiMajorAxis
-        {
-            set { curve.semiMajorAxis = semiMajorAxis = value; }
-            get { return semiMajorAxis; }
-        }
-
-        /// <summary>
-        /// Curve of path.
-        /// </summary>
-        protected EllipseCurve curve = new EllipseCurve(Vector3.zero, 1.0f, 2.0f);
+        public override float MaxKey { get { return 2 * Mathf.PI; } }
         #endregion
 
         #region Public Method
-        /// <summary>
-        /// Rebuild path.
-        /// </summary>
-        public override void Rebuild()
-        {
-            curve = new EllipseCurve(Vector3.zero, semiMinorAxis, semiMajorAxis);
-        }
+        public override void Rebuild() { }
 
         /// <summary>
         /// Get point on path curve at radian.
@@ -79,7 +43,7 @@ namespace Mogoson.CurvePath
         /// <returns>The point on path curve at radian.</returns>
         public override Vector3 GetPointAt(float radian)
         {
-            return transform.TransformPoint(curve.GetPointAt(radian));
+            return transform.TransformPoint(EllipseCurve.GetPointAt(ellipse, radian));
         }
         #endregion
     }
