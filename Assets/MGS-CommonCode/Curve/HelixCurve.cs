@@ -20,13 +20,44 @@ namespace Mogoson.Curve
     public class HelixCurve : ICurve
     {
         #region Field and Property
-        public float MaxKey { get { return 0; } }
+        /// <summary>
+        /// Top ellipse info of curve.
+        /// </summary>
+        public EllipseInfo topEllipse = new EllipseInfo();
+
+        /// <summary>
+        /// Bottom ellipse info of curve.
+        /// </summary>
+        public EllipseInfo bottomEllipse = new EllipseInfo();
+
+        public float aroundRadian = 2 * Mathf.PI;
+
+        public float MaxKey { get { return aroundRadian; } }
         #endregion
 
         #region Public Method
-        public Vector3 GetPointAt(float key)
+        public HelixCurve(EllipseInfo topEllipse, EllipseInfo bottomEllipse)
         {
-            throw new System.NotImplementedException();
+            this.topEllipse = topEllipse;
+            this.bottomEllipse = bottomEllipse;
+        }
+
+        public Vector3 GetPointAt(float radian)
+        {
+            return GetPointAt(topEllipse, bottomEllipse, MaxKey, radian);
+        }
+        #endregion
+
+        #region Static Method
+        /// <summary>
+        /// Get point on ellipse at around radian.
+        /// </summary>
+        /// <param name="ellipse">Ellipse info of curve.</param>
+        /// <param name="radian">Around radian of ellipse.</param>
+        /// <returns>The point on ellipse at around radian.</returns>
+        public static Vector3 GetPointAt(EllipseInfo topEllipse, EllipseInfo bottomEllipse, float MaxKey, float radian)
+        {
+            return Vector3.Lerp(EllipseCurve.GetPointAt(topEllipse, radian), EllipseCurve.GetPointAt(bottomEllipse, radian), radian / MaxKey);
         }
         #endregion
     }
