@@ -30,18 +30,29 @@ namespace Mogoson.Curve
         /// </summary>
         public EllipseInfo bottomEllipse = new EllipseInfo();
 
-        public float aroundRadian = 2 * Mathf.PI;
-
-        public float MaxKey { get { return aroundRadian; } }
+        /// <summary>
+        /// Max around radian of helix.
+        /// </summary>
+        public float MaxKey { set; get; }
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="topEllipse">Top ellipse info of curve.</param>
+        /// <param name="bottomEllipse">Bottom ellipse info of curve.</param>
         public HelixCurve(EllipseInfo topEllipse, EllipseInfo bottomEllipse)
         {
             this.topEllipse = topEllipse;
             this.bottomEllipse = bottomEllipse;
         }
 
+        /// <summary>
+        /// Get point on helix at around radian.
+        /// </summary>
+        /// <param name="radian">Around radian of helix.</param>
+        /// <returns>The point on helix at around radian.</returns>
         public Vector3 GetPointAt(float radian)
         {
             return GetPointAt(topEllipse, bottomEllipse, MaxKey, radian);
@@ -50,14 +61,19 @@ namespace Mogoson.Curve
 
         #region Static Method
         /// <summary>
-        /// Get point on ellipse at around radian.
+        /// Get point on helix at around radian.
         /// </summary>
-        /// <param name="ellipse">Ellipse info of curve.</param>
-        /// <param name="radian">Around radian of ellipse.</param>
-        /// <returns>The point on ellipse at around radian.</returns>
-        public static Vector3 GetPointAt(EllipseInfo topEllipse, EllipseInfo bottomEllipse, float MaxKey, float radian)
+        /// <param name="topEllipse">Top ellipse info of curve.</param>
+        /// <param name="bottomEllipse">Bottom ellipse info of curve.</param>
+        /// <param name="maxRadian">Max around radian of helix.</param>
+        /// <param name="radian">Around radian of helix.</param>
+        /// <returns>The point on helix at around radian.</returns>
+        public static Vector3 GetPointAt(EllipseInfo topEllipse, EllipseInfo bottomEllipse, float maxRadian, float radian)
         {
-            return Vector3.Lerp(EllipseCurve.GetPointAt(topEllipse, radian), EllipseCurve.GetPointAt(bottomEllipse, radian), radian / MaxKey);
+            if (maxRadian == 0)
+                maxRadian = Mathf.Epsilon;
+
+            return Vector3.Lerp(EllipseCurve.GetPointAt(topEllipse, radian), EllipseCurve.GetPointAt(bottomEllipse, radian), radian / maxRadian);
         }
         #endregion
     }

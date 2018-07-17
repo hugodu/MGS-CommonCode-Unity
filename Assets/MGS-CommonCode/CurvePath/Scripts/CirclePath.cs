@@ -1,12 +1,12 @@
 ﻿/*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  EllipsePath.cs
- *  Description  :  Define path base on ellipse curve.
+ *  File         :  CirclePath.cs
+ *  Description  :  Define path base on circle curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
- *  Date         :  7/14/2018
+ *  Date         :  7/17/2018
  *  Description  :  Initial development version.
  *************************************************************************/
 
@@ -16,59 +16,40 @@ using UnityEngine;
 namespace Mogoson.CurvePath
 {
     /// <summary>
-    /// Path base on ellipse curve.
+    /// Path base on circle curve.
     /// </summary>
-    [AddComponentMenu("Mogoson/CurvePath/EllipsePath")]
-    public class EllipsePath : MonoCurvePath
+    [AddComponentMenu("Mogoson/CurvePath/CirclePath")]
+    public class CirclePath : MonoCurvePath
     {
         #region Field and Property
         /// <summary>
-        /// Semi minor axis of ellipse.
+        /// Radius of circle curve.
         /// </summary>
         [SerializeField]
-        protected float semiMinorAxis = 1.0f;
+        protected float radius = 1.0f;
 
         /// <summary>
-        /// Semi minor axis of ellipse.
+        /// Radius of circle curve.
         /// </summary>
-        public float SemiMinorAxis
+        public float Radius
         {
             set
             {
-                semiMinorAxis = value;
-                ellipse.semiMinorAxis = semiMinorAxis;
+                radius = value;
+                circle.semiMinorAxis = circle.semiMajorAxis = radius;
             }
-            get { return semiMinorAxis; }
+            get { return radius; }
         }
 
         /// <summary>
-        /// Semi major axis of ellipse.
-        /// </summary>
-        [SerializeField]
-        protected float semiMajorAxis = 1.5f;
-
-        /// <summary>
-        /// Semi major axis of ellipse.
-        /// </summary>
-        public float SemiMajorAxis
-        {
-            set
-            {
-                semiMajorAxis = value;
-                ellipse.semiMajorAxis = semiMajorAxis;
-            }
-            get { return semiMajorAxis; }
-        }
-
-        /// <summary>
-        /// Max around radian of ellipse.
+        /// Max around radian of curve.
         /// </summary>
         public override float MaxKey { get { return 2 * Mathf.PI; } }
 
         /// <summary>
-        /// Ellipse info of path curve.
+        /// Circle info of path curve.
         /// </summary>
-        protected EllipseInfo ellipse = new EllipseInfo();
+        protected EllipseInfo circle = new EllipseInfo();
         #endregion
 
         #region Public Method
@@ -77,8 +58,7 @@ namespace Mogoson.CurvePath
         /// </summary>
         public override void Rebuild()
         {
-            ellipse.semiMinorAxis = semiMinorAxis;
-            ellipse.semiMajorAxis = semiMajorAxis;
+            circle.semiMinorAxis = circle.semiMajorAxis = radius;
         }
 
         /// <summary>
@@ -88,7 +68,7 @@ namespace Mogoson.CurvePath
         /// <returns>The point on path curve at radian.</returns>
         public override Vector3 GetPointAt(float radian)
         {
-            return transform.TransformPoint(EllipseCurve.GetPointAt(ellipse, radian));
+            return transform.TransformPoint(EllipseCurve.GetPointAt(circle, radian));
         }
         #endregion
     }
