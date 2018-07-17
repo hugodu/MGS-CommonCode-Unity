@@ -73,7 +73,7 @@ namespace Mogoson.Curve
             if (maxRadian == 0)
                 maxRadian = Mathf.Epsilon;
 
-            return Vector3.Lerp(EllipseCurve.GetPointAt(topEllipse, radian), EllipseCurve.GetPointAt(bottomEllipse, radian), radian / maxRadian);
+            return Vector3.Lerp(EllipseCurve.GetPointAt(bottomEllipse, radian), EllipseCurve.GetPointAt(topEllipse, radian), radian / maxRadian);
         }
         #endregion
     }
