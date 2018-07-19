@@ -35,26 +35,28 @@ namespace Mogoson.CurvePath
         /// <summary>
         /// Max around radian of helix.
         /// </summary>
-        [SerializeField]
-        protected float maxRadian = 6 * Mathf.PI;
+        public float maxRadian = 6 * Mathf.PI;
 
         /// <summary>
-        /// Max around radian of helix.
+        /// Curve for path.
         /// </summary>
-        public float MaxRadian
-        {
-            set { maxRadian = value; }
-            get { return maxRadian; }
-        }
+        protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Max around radian of helix.
+        /// Curve of path.
         /// </summary>
-        public override float MaxKey { get { return maxRadian; } }
+        protected HelixCurve curve = new HelixCurve();
         #endregion
 
         #region Public Method
-        public override void Rebuild() { }
+        /// <summary>
+        /// Rebuild path.
+        /// </summary>
+        public override void Rebuild()
+        {
+            curve.topEllipse = topEllipse;
+            curve.bottomEllipse = bottomEllipse;
+        }
 
         /// <summary>
         /// Get point on path curve at radian.
@@ -63,7 +65,7 @@ namespace Mogoson.CurvePath
         /// <returns>The point on path curve at radian.</returns>
         public override Vector3 GetPointAt(float radian)
         {
-            return transform.TransformPoint(HelixCurve.GetPointAt(topEllipse, bottomEllipse, MaxKey, radian));
+            return transform.TransformPoint(curve.GetPointAt(radian));
         }
         #endregion
     }

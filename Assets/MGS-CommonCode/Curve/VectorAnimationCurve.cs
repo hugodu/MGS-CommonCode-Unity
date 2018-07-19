@@ -21,16 +21,16 @@ using UnityEngine;
 namespace Mogoson.Curve
 {
     /// <summary>
-    /// Key frame data.
+    /// Vector keyframe.
     /// </summary>
     [Serializable]
     public struct VectorKeyframe
     {
         #region Field and Property
         /// <summary>
-        /// Time of keyframe.
+        /// Key of keyframe.
         /// </summary>
-        public float time;
+        public float key;
 
         /// <summary>
         /// Value of keyframe.
@@ -42,11 +42,11 @@ namespace Mogoson.Curve
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="time">Time of keyframe.</param>
+        /// <param name="key">Key of keyframe.</param>
         /// <param name="value">Value of keyframe.</param>
-        public VectorKeyframe(float time, Vector3 value)
+        public VectorKeyframe(float key, Vector3 value)
         {
-            this.time = time;
+            this.key = key;
             this.value = value;
         }
         #endregion
@@ -69,9 +69,31 @@ namespace Mogoson.Curve
 
         #region Field and Property
         /// <summary>
+        /// Coefficient of delta to lerp key.
+        /// </summary>
+        protected const float Coefficient = 0.05f;
+
+        /// <summary>
         /// Count of Keyframes.
         /// </summary>
         public int KeyframeCount { get { return xCurve.length; } }
+
+        /// <summary>
+        /// Length of curve.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                var length = 0.0f;
+                var delta = MaxKey * Coefficient;
+                for (float key = 0; key < MaxKey; key += delta)
+                {
+                    length += Vector3.Distance(GetPointAt(key), GetPointAt(key + delta));
+                }
+                return length;
+            }
+        }
 
         /// <summary>
         /// Max key of curve.
@@ -128,9 +150,9 @@ namespace Mogoson.Curve
         /// <returns>The index of the added keyframe, or -1 if the keyframe could not be added.</returns>
         public int AddKeyframe(VectorKeyframe keyframe)
         {
-            xCurve.AddKey(keyframe.time, keyframe.value.x);
-            yCurve.AddKey(keyframe.time, keyframe.value.y);
-            return zCurve.AddKey(keyframe.time, keyframe.value.z);
+            xCurve.AddKey(keyframe.key, keyframe.value.x);
+            yCurve.AddKey(keyframe.key, keyframe.value.y);
+            return zCurve.AddKey(keyframe.key, keyframe.value.z);
         }
 
         /// <summary>
@@ -209,21 +231,21 @@ namespace Mogoson.Curve
             else
             {
                 //Add frame keys to curve.
-                var time = 0f;
+                var distance = 0f;
                 for (int i = 0; i < anchors.Length - 1; i++)
                 {
-                    curve.AddKeyframe(time, anchors[i]);
-                    time += Vector3.Distance(anchors[i], anchors[i + 1]);
+                    curve.AddKeyframe(distance, anchors[i]);
+                    distance += Vector3.Distance(anchors[i], anchors[i + 1]);
                 }
 
                 //Add the last key.
-                curve.AddKeyframe(time, anchors[anchors.Length - 1]);
+                curve.AddKeyframe(distance, anchors[anchors.Length - 1]);
 
                 if (close)
                 {
                     //Add the close key(the first key).
-                    time += Vector3.Distance(anchors[anchors.Length - 1], anchors[0]);
-                    curve.AddKeyframe(time, anchors[0]);
+                    distance += Vector3.Distance(anchors[anchors.Length - 1], anchors[0]);
+                    curve.AddKeyframe(distance, anchors[0]);
                 }
 
                 //Smooth curve keys out tangent.

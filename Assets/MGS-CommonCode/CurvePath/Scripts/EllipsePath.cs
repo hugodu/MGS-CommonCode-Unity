@@ -25,50 +25,22 @@ namespace Mogoson.CurvePath
         /// <summary>
         /// Semi minor axis of ellipse.
         /// </summary>
-        [SerializeField]
-        protected float semiMinorAxis = 1.0f;
-
-        /// <summary>
-        /// Semi minor axis of ellipse.
-        /// </summary>
-        public float SemiMinorAxis
-        {
-            set
-            {
-                semiMinorAxis = value;
-                ellipse.semiMinorAxis = semiMinorAxis;
-            }
-            get { return semiMinorAxis; }
-        }
+        public float semiMinorAxis = 1.0f;
 
         /// <summary>
         /// Semi major axis of ellipse.
         /// </summary>
-        [SerializeField]
-        protected float semiMajorAxis = 1.5f;
+        public float semiMajorAxis = 1.5f;
 
         /// <summary>
-        /// Semi major axis of ellipse.
+        /// Curve for path.
         /// </summary>
-        public float SemiMajorAxis
-        {
-            set
-            {
-                semiMajorAxis = value;
-                ellipse.semiMajorAxis = semiMajorAxis;
-            }
-            get { return semiMajorAxis; }
-        }
+        protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Max around radian of ellipse.
+        /// Curve of path.
         /// </summary>
-        public override float MaxKey { get { return 2 * Mathf.PI; } }
-
-        /// <summary>
-        /// Ellipse info of path curve.
-        /// </summary>
-        protected EllipseInfo ellipse = new EllipseInfo();
+        protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
@@ -77,18 +49,8 @@ namespace Mogoson.CurvePath
         /// </summary>
         public override void Rebuild()
         {
-            ellipse.semiMinorAxis = semiMinorAxis;
-            ellipse.semiMajorAxis = semiMajorAxis;
-        }
-
-        /// <summary>
-        /// Get point on path curve at radian.
-        /// </summary>
-        /// <param name="radian">Radian of curve.</param>
-        /// <returns>The point on path curve at radian.</returns>
-        public override Vector3 GetPointAt(float radian)
-        {
-            return transform.TransformPoint(EllipseCurve.GetPointAt(ellipse, radian));
+            curve.ellipse.semiMinorAxis = semiMinorAxis;
+            curve.ellipse.semiMajorAxis = semiMajorAxis;
         }
         #endregion
     }

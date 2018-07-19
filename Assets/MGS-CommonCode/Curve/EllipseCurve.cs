@@ -63,7 +63,20 @@ namespace Mogoson.Curve
         /// <summary>
         /// Ellipse info of curve.
         /// </summary>
-        public EllipseInfo ellipse = new EllipseInfo();
+        public EllipseInfo ellipse;
+
+        /// <summary>
+        /// Length of curve.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                var minor = Mathf.Min(ellipse.semiMinorAxis, ellipse.semiMajorAxis);
+                var major = Mathf.Max(ellipse.semiMinorAxis, ellipse.semiMajorAxis);
+                return 2 * Mathf.PI * minor + 4 * (major - minor);
+            }
+        }
 
         /// <summary>
         /// Max around radian of ellipse.
@@ -72,6 +85,14 @@ namespace Mogoson.Curve
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public EllipseCurve()
+        {
+            ellipse = new EllipseInfo();
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>

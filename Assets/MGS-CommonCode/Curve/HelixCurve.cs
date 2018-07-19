@@ -21,14 +21,36 @@ namespace Mogoson.Curve
     {
         #region Field and Property
         /// <summary>
+        /// Coefficient of delta to lerp key.
+        /// </summary>
+        protected const float Coefficient = 0.05f;
+
+        /// <summary>
         /// Top ellipse info of curve.
         /// </summary>
-        public EllipseInfo topEllipse = new EllipseInfo();
+        public EllipseInfo topEllipse;
 
         /// <summary>
         /// Bottom ellipse info of curve.
         /// </summary>
-        public EllipseInfo bottomEllipse = new EllipseInfo();
+        public EllipseInfo bottomEllipse;
+
+        /// <summary>
+        /// Length of curve.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                var length = 0.0f;
+                var delta = MaxKey * Coefficient;
+                for (float key = 0; key < MaxKey; key += delta)
+                {
+                    length += Vector3.Distance(GetPointAt(key), GetPointAt(key + delta));
+                }
+                return length;
+            }
+        }
 
         /// <summary>
         /// Max around radian of helix.
@@ -37,6 +59,15 @@ namespace Mogoson.Curve
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public HelixCurve()
+        {
+            topEllipse = new EllipseInfo();
+            bottomEllipse = new EllipseInfo();
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>

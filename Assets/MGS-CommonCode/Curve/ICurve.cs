@@ -21,6 +21,11 @@ namespace Mogoson.Curve
     {
         #region Property
         /// <summary>
+        /// Length of curve.
+        /// </summary>
+        float Length { get; }
+
+        /// <summary>
         /// Max key of curve.
         /// </summary>
         float MaxKey { get; }

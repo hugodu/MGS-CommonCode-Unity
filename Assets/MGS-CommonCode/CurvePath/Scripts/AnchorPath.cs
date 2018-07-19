@@ -51,21 +51,12 @@ namespace Mogoson.CurvePath
         }
 
         /// <summary>
-        /// Max time of path curve.
+        /// Curve for path.
         /// </summary>
-        public override float MaxKey
-        {
-            get
-            {
-                if (curve.KeyframeCount > 0)
-                    return curve[curve.KeyframeCount - 1].time;
-                else
-                    return 0;
-            }
-        }
+        protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// VectorAnimationCurve of path.
+        /// Curve of path.
         /// </summary>
         protected VectorAnimationCurve curve = new VectorAnimationCurve();
         #endregion
@@ -78,17 +69,7 @@ namespace Mogoson.CurvePath
         {
             curve = VectorAnimationCurve.FromAnchors(anchors.ToArray(), close);
         }
-
-        /// <summary>
-        /// Get point on path curve at time.
-        /// </summary>
-        /// <param name="time">Time of curve.</param>
-        /// <returns>The point on path curve at time.</returns>
-        public override Vector3 GetPointAt(float time)
-        {
-            return transform.TransformPoint(curve.GetPointAt(time));
-        }
-
+        
         /// <summary>
         /// Add anchor item.
         /// </summary>

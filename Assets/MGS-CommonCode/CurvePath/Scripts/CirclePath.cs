@@ -25,31 +25,17 @@ namespace Mogoson.CurvePath
         /// <summary>
         /// Radius of circle curve.
         /// </summary>
-        [SerializeField]
-        protected float radius = 1.0f;
+        public float radius = 1.0f;
 
         /// <summary>
-        /// Radius of circle curve.
+        /// Curve for path.
         /// </summary>
-        public float Radius
-        {
-            set
-            {
-                radius = value;
-                circle.semiMinorAxis = circle.semiMajorAxis = radius;
-            }
-            get { return radius; }
-        }
+        protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Max around radian of curve.
+        /// Curve of path.
         /// </summary>
-        public override float MaxKey { get { return 2 * Mathf.PI; } }
-
-        /// <summary>
-        /// Circle info of path curve.
-        /// </summary>
-        protected EllipseInfo circle = new EllipseInfo();
+        protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
@@ -58,17 +44,7 @@ namespace Mogoson.CurvePath
         /// </summary>
         public override void Rebuild()
         {
-            circle.semiMinorAxis = circle.semiMajorAxis = radius;
-        }
-
-        /// <summary>
-        /// Get point on path curve at radian.
-        /// </summary>
-        /// <param name="radian">Radian of curve.</param>
-        /// <returns>The point on path curve at radian.</returns>
-        public override Vector3 GetPointAt(float radian)
-        {
-            return transform.TransformPoint(EllipseCurve.GetPointAt(circle, radian));
+            curve.ellipse.semiMinorAxis = curve.ellipse.semiMajorAxis = radius;
         }
         #endregion
     }

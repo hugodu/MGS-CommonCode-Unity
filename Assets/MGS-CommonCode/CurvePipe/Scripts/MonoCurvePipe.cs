@@ -113,6 +113,11 @@ namespace Mogoson.CurvePipe
         /// Max key of pipe center curve.
         /// </summary>
         public abstract float MaxKey { get; }
+
+        /// <summary>
+        /// Length of path curve.
+        /// </summary>
+        public virtual float Length { get { return 0; } }
         #endregion
 
         #region Protected Method

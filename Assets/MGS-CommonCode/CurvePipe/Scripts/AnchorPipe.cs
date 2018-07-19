@@ -45,7 +45,7 @@ namespace Mogoson.CurvePipe
             get
             {
                 if (curve.KeyframeCount > 0)
-                    return curve[curve.KeyframeCount - 1].time;
+                    return curve[curve.KeyframeCount - 1].key;
                 else
                     return 0;
             }

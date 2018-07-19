@@ -144,6 +144,27 @@ namespace Mogoson.Curve
     {
         #region Field and Property
         /// <summary>
+        /// Delta to lerp key.
+        /// </summary>
+        protected const float Delta = 0.05f;
+
+        /// <summary>
+        /// Length of curve.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                var length = 0.0f;
+                for (float key = 0; key < MaxKey; key += Delta)
+                {
+                    length += Vector3.Distance(GetPointAt(key), GetPointAt(key + Delta));
+                }
+                return length;
+            }
+        }
+
+        /// <summary>
         /// Max key of curve.
         /// </summary>
         public float MaxKey { get { return 1.0f; } }
@@ -172,6 +193,14 @@ namespace Mogoson.Curve
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public LinearBezierCurve()
+        {
+            anchor = new LinearBezierAnchor();
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -222,6 +251,14 @@ namespace Mogoson.Curve
         /// <summary>
         /// Constructor.
         /// </summary>
+        public QuadraticBezierCurve()
+        {
+            anchor = new QuadraticBezierAnchor();
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="anchor">Anchor points of curve.</param>
         public QuadraticBezierCurve(QuadraticBezierAnchor anchor)
         {
@@ -269,6 +306,14 @@ namespace Mogoson.Curve
         /// <summary>
         /// Constructor.
         /// </summary>
+        public CubicBezierCurve()
+        {
+            anchor = new CubicBezierAnchor();
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="anchor">Anchor points of curve.</param>
         public CubicBezierCurve(CubicBezierAnchor anchor)
         {
@@ -293,10 +338,10 @@ namespace Mogoson.Curve
         /// <param name="anchor">Anchor points of curve.</param>
         /// <param name="key">Key is in the range(0~1).</param>
         /// <returns>Point on curve.</returns>
-        public static Vector3 GetPointAt(CubicBezierAnchor anchor, float t)
+        public static Vector3 GetPointAt(CubicBezierAnchor anchor, float key)
         {
-            return Mathf.Pow(1 - t, 3) * anchor.start + 3 * t * Mathf.Pow(1 - t, 2) * anchor.startTangent +
-                3 * (1 - t) * Mathf.Pow(t, 2) * anchor.endTangent + Mathf.Pow(t, 3) * anchor.end;
+            return Mathf.Pow(1 - key, 3) * anchor.start + 3 * key * Mathf.Pow(1 - key, 2) * anchor.startTangent +
+                3 * (1 - key) * Mathf.Pow(key, 2) * anchor.endTangent + Mathf.Pow(key, 3) * anchor.end;
         }
         #endregion
     }
