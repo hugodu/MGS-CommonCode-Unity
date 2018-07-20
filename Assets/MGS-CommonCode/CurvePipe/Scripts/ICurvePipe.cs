@@ -26,9 +26,9 @@ namespace Mogoson.CurvePipe
         int AroundSegment { set; get; }
 
         /// <summary>
-        /// Segment of extend pipe.
+        /// Length of subdivide pipe.
         /// </summary>
-        int ExtendSegment { set; get; }
+        float SubdivideLength { set; get; }
 
         /// <summary>
         /// Radius of pipe mesh.

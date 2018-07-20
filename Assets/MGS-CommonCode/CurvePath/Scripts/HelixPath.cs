@@ -56,16 +56,7 @@ namespace Mogoson.CurvePath
         {
             curve.topEllipse = topEllipse;
             curve.bottomEllipse = bottomEllipse;
-        }
-
-        /// <summary>
-        /// Get point on path curve at radian.
-        /// </summary>
-        /// <param name="radian">Radian of curve.</param>
-        /// <returns>The point on path curve at radian.</returns>
-        public override Vector3 GetPointAt(float radian)
-        {
-            return transform.TransformPoint(curve.GetPointAt(radian));
+            curve.MaxKey = maxRadian;
         }
         #endregion
     }

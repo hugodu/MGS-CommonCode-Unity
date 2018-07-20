@@ -48,15 +48,26 @@ namespace Mogoson.CurvePipe
         }
 
         /// <summary>
-        /// Max around radian of curve.
+        /// Curve for path.
         /// </summary>
-        public override float MaxKey { get { return maxRadian; } }
+        protected override ICurve Curve { get { return curve; } }
+
+        /// <summary>
+        /// Curve of path.
+        /// </summary>
+        protected HelixCurve curve = new HelixCurve();
         #endregion
 
         #region Public Method
-        protected override Vector3 GetLocalPointAt(float time)
+        /// <summary>
+        /// Rebuild path.
+        /// </summary>
+        public override void Rebuild()
         {
-            return HelixCurve.GetPointAt(topEllipse, bottomEllipse, MaxKey, time);
+            curve.topEllipse = topEllipse;
+            curve.bottomEllipse = bottomEllipse;
+            curve.MaxKey = maxRadian;
+            base.Rebuild();
         }
         #endregion
     }

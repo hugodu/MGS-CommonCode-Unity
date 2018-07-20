@@ -36,7 +36,6 @@ namespace Mogoson.CurvePipe
             set
             {
                 semiMinorAxis = value;
-                ellipse.semiMinorAxis = semiMinorAxis;
             }
             get { return semiMinorAxis; }
         }
@@ -55,20 +54,19 @@ namespace Mogoson.CurvePipe
             set
             {
                 semiMajorAxis = value;
-                ellipse.semiMajorAxis = semiMajorAxis;
             }
             get { return semiMajorAxis; }
         }
 
         /// <summary>
-        /// Max around radian of curve.
+        /// Curve for path.
         /// </summary>
-        public override float MaxKey { get { return 2 * Mathf.PI; } }
+        protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Circle info of path curve.
+        /// Curve of path.
         /// </summary>
-        protected EllipseInfo ellipse = new EllipseInfo();
+        protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
@@ -77,14 +75,9 @@ namespace Mogoson.CurvePipe
         /// </summary>
         public override void Rebuild()
         {
-            ellipse.semiMinorAxis = semiMinorAxis;
-            ellipse.semiMajorAxis = semiMajorAxis;
+            curve.ellipse.semiMinorAxis = semiMinorAxis;
+            curve.ellipse.semiMajorAxis = semiMajorAxis;
             base.Rebuild();
-        }
-
-        protected override Vector3 GetLocalPointAt(float time)
-        {
-            return EllipseCurve.GetPointAt(ellipse, time);
         }
         #endregion
     }

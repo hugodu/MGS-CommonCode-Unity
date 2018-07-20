@@ -38,35 +38,14 @@ namespace Mogoson.CurvePipe
         public int AnchorsCount { get { return anchors.Count; } }
 
         /// <summary>
-        /// Max time of pipe curve.
+        /// Curve for path.
         /// </summary>
-        public override float MaxKey
-        {
-            get
-            {
-                if (curve.KeyframeCount > 0)
-                    return curve[curve.KeyframeCount - 1].key;
-                else
-                    return 0;
-            }
-        }
+        protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
         /// VectorAnimationCurve of pipe.
         /// </summary>
         protected VectorAnimationCurve curve = new VectorAnimationCurve();
-        #endregion
-
-        #region Protected Method
-        /// <summary>
-        /// Get local point from center curve of pipe at time.
-        /// </summary>
-        /// <param name="time">Time of pipe center curve.</param>
-        /// <returns>Local point on pipe curve at time.</returns>
-        protected override Vector3 GetLocalPointAt(float time)
-        {
-            return curve.GetPointAt(time);
-        }
         #endregion
 
         #region Public Method

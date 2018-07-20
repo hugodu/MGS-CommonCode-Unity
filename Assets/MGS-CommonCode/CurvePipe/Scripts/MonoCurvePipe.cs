@@ -11,6 +11,7 @@
  *  Description  :  Initial development version.
  *************************************************************************/
 
+using Mogoson.Curve;
 using Mogoson.Skin;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,10 +31,10 @@ namespace Mogoson.CurvePipe
         protected int around = 8;
 
         /// <summary>
-        /// Segment of extend pipe.
+        /// Length of subdivide pipe.
         /// </summary>
         [SerializeField]
-        protected int extend = 16;
+        protected float subdivide = 1;
 
         /// <summary>
         /// Radius of pipe mesh.
@@ -48,6 +49,57 @@ namespace Mogoson.CurvePipe
         protected bool seal = false;
 
         /// <summary>
+        /// Segment of around pipe.
+        /// </summary>
+        public int AroundSegment
+        {
+            set { around = value; }
+            get { return around; }
+        }
+
+        /// <summary>
+        ///  Length of subdivide pipe.
+        /// </summary>
+        public float SubdivideLength
+        {
+            set { subdivide = value; }
+            get { return subdivide; }
+        }
+
+        /// <summary>
+        /// Radius of pipe mesh.
+        /// </summary>
+        public float Radius
+        {
+            set { radius = value; }
+            get { return radius; }
+        }
+
+        /// <summary>
+        /// Is seal at both ends of pipe?
+        /// </summary>
+        public bool Seal
+        {
+            set { seal = value; }
+            get { return seal; }
+        }
+
+        /// <summary>
+        /// Max key of pipe center curve.
+        /// </summary>
+        public virtual float MaxKey { get { return Curve.MaxKey; } }
+
+        /// <summary>
+        /// Length of path center curve.
+        /// </summary>
+        public virtual float Length { get { return Curve.Length; } }
+
+        /// <summary>
+        /// Curve for path.
+        /// </summary>
+        protected abstract ICurve Curve { get; }
+
+        /// <summary>
         /// Radian of circle.
         /// </summary>
         protected const float CircleRadian = Mathf.PI * 2;
@@ -57,67 +109,7 @@ namespace Mogoson.CurvePipe
         /// </summary>
         protected const float Delta = 0.001f;
 
-        /// <summary>
-        /// Segment of around pipe.
-        /// </summary>
-        public int AroundSegment
-        {
-            set
-            {
-                around = value;
-                Rebuild();
-            }
-            get { return around; }
-        }
-
-        /// <summary>
-        /// Segment of extend pipe.
-        /// </summary>
-        public int ExtendSegment
-        {
-            set
-            {
-                extend = value;
-                Rebuild();
-            }
-            get { return extend; }
-        }
-
-        /// <summary>
-        /// Radius of pipe mesh.
-        /// </summary>
-        public float Radius
-        {
-            set
-            {
-                radius = value;
-                Rebuild();
-            }
-            get { return radius; }
-        }
-
-        /// <summary>
-        /// Is seal at both ends of pipe?
-        /// </summary>
-        public bool Seal
-        {
-            set
-            {
-                seal = value;
-                Rebuild();
-            }
-            get { return seal; }
-        }
-
-        /// <summary>
-        /// Max key of pipe center curve.
-        /// </summary>
-        public abstract float MaxKey { get; }
-
-        /// <summary>
-        /// Length of path curve.
-        /// </summary>
-        public virtual float Length { get { return 0; } }
+        protected int extend = 0;
         #endregion
 
         #region Protected Method
@@ -128,23 +120,23 @@ namespace Mogoson.CurvePipe
         protected override Vector3[] CreateVertices()
         {
             var vertices = new List<Vector3>();
-            var space = 1.0f / extend;
+            var space = MaxKey / extend;
             for (int i = 0; i < extend; i++)
             {
                 var t = i * space;
-                var center = GetLocalPoint(t);
-                var tangent = (GetLocalPoint(t + Delta) - center).normalized;
+                var center = Curve.GetPointAt(t);
+                var tangent = (Curve.GetPointAt(t + Delta) - center).normalized;
                 vertices.AddRange(CreateSegmentVertices(center, Quaternion.LookRotation(tangent)));
             }
 
-            var lastCenter = GetLocalPoint(1.0f);
-            var lastTangent = (lastCenter - GetLocalPoint(1.0f - Delta)).normalized;
+            var lastCenter = Curve.GetPointAt(MaxKey);
+            var lastTangent = (lastCenter - Curve.GetPointAt(MaxKey - Delta)).normalized;
             vertices.AddRange(CreateSegmentVertices(lastCenter, Quaternion.LookRotation(lastTangent)));
 
             if (seal && around > 2)
             {
-                vertices.Add(GetLocalPoint(0));
-                vertices.Add(GetLocalPoint(1));
+                vertices.Add(Curve.GetPointAt(0));
+                vertices.Add(Curve.GetPointAt(MaxKey));
             }
             return vertices.ToArray();
         }
@@ -219,26 +211,18 @@ namespace Mogoson.CurvePipe
             }
             return vertices;
         }
-
-        /// <summary>
-        /// Get local point from center curve of pipe at normalized time.
-        /// </summary>
-        /// <param name="t">Normalized time in the range(0~1).</param>
-        /// <returns>Local point on pipe curve at t.</returns>
-        protected Vector3 GetLocalPoint(float t)
-        {
-            return GetLocalPointAt(MaxKey * t);
-        }
-
-        /// <summary>
-        /// Get local point from center curve of pipe at time.
-        /// </summary>
-        /// <param name="time">Time of pipe center curve.</param>
-        /// <returns>Local point on pipe curve at time.</returns>
-        protected abstract Vector3 GetLocalPointAt(float time);
         #endregion
 
         #region Public Method
+        /// <summary>
+        /// Rebuild the mesh of pipe.
+        /// </summary>
+        public override void Rebuild()
+        {
+            extend = (int)(Length / subdivide);
+            base.Rebuild();
+        }
+
         /// <summary>
         /// Get point from center curve of pipe at key.
         /// </summary>
@@ -246,7 +230,7 @@ namespace Mogoson.CurvePipe
         /// <returns>Point on pipe curve at key.</returns>
         public Vector3 GetPointAt(float key)
         {
-            return transform.TransformPoint(GetLocalPointAt(key));
+            return transform.TransformPoint(Curve.GetPointAt(key));
         }
         #endregion
     }

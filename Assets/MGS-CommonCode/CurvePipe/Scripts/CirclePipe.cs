@@ -22,15 +22,17 @@ namespace Mogoson.CurvePipe
     public class CirclePipe : MonoCurvePipe
     {
         #region Field and Property
-        /// <summary>
-        /// Max around radian of curve.
-        /// </summary>
-        public override float MaxKey { get { return 2 * Mathf.PI; } }
+        public float circleRadius = 1;
 
         /// <summary>
-        /// Circle info of path curve.
+        /// Curve for path.
         /// </summary>
-        protected EllipseInfo circle = new EllipseInfo();
+        protected override ICurve Curve { get { return curve; } }
+
+        /// <summary>
+        /// Curve of path.
+        /// </summary>
+        protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
@@ -39,13 +41,8 @@ namespace Mogoson.CurvePipe
         /// </summary>
         public override void Rebuild()
         {
-            circle.semiMinorAxis = circle.semiMajorAxis = radius+2;
+            curve.ellipse.semiMinorAxis = curve.ellipse.semiMajorAxis = circleRadius;
             base.Rebuild();
-        }
-
-        protected override Vector3 GetLocalPointAt(float time)
-        {
-            return EllipseCurve.GetPointAt(circle, time);
         }
         #endregion
     }
