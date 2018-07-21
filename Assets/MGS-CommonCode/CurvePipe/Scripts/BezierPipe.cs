@@ -29,7 +29,7 @@ namespace Mogoson.CurvePipe
         [HideInInspector]
         protected CubicBezierAnchor anchor = new CubicBezierAnchor(Vector3.one,
             new Vector3(3, 1, 3), new Vector3(1, 1, 2), new Vector3(3, 1, 2));
-        
+
         /// <summary>
         /// Start point of pipe curve.
         /// </summary>
@@ -67,19 +67,19 @@ namespace Mogoson.CurvePipe
         }
 
         /// <summary>
-        /// Curve for path.
+        /// Curve for pipe.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of path.
+        /// Curve of pipe.
         /// </summary>
         protected CubicBezierCurve curve = new CubicBezierCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild path.
+        /// Rebuild the mesh of pipe.
         /// </summary>
         public override void Rebuild()
         {

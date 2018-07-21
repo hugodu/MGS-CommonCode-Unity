@@ -38,7 +38,7 @@ namespace Mogoson.CurvePipe
         public int AnchorsCount { get { return anchors.Count; } }
 
         /// <summary>
-        /// Curve for path.
+        /// Curve for pipe.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 

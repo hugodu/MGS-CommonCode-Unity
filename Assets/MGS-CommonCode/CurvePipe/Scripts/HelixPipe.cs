@@ -2,7 +2,7 @@
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
  *  File         :  HelixPipe.cs
- *  Description  :  Render dynamic pipe mesh base on circle curve.
+ *  Description  :  Render dynamic pipe mesh base on helix curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -16,7 +16,7 @@ using UnityEngine;
 namespace Mogoson.CurvePipe
 {
     /// <summary>
-    /// Render dynamic pipe mesh base on circle curve.
+    /// Render dynamic pipe mesh base on helix curve.
     /// </summary>
     [AddComponentMenu("Mogoson/CurvePipe/HelixPipe")]
     public class HelixPipe : MonoCurvePipe
@@ -35,25 +35,15 @@ namespace Mogoson.CurvePipe
         /// <summary>
         /// Max around radian of helix.
         /// </summary>
-        [SerializeField]
-        protected float maxRadian = 6 * Mathf.PI;
+        public float maxRadian = 6 * Mathf.PI;
 
         /// <summary>
-        /// Max around radian of helix.
-        /// </summary>
-        public float MaxRadian
-        {
-            set { maxRadian = value; }
-            get { return maxRadian; }
-        }
-
-        /// <summary>
-        /// Curve for path.
+        /// Curve for pipe.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of path.
+        /// Curve of pipe.
         /// </summary>
         protected HelixCurve curve = new HelixCurve();
         #endregion

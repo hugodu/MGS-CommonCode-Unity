@@ -22,26 +22,29 @@ namespace Mogoson.CurvePipe
     public class CirclePipe : MonoCurvePipe
     {
         #region Field and Property
-        public float circleRadius = 1;
+        /// <summary>
+        /// Extend radius of pipe curve.
+        /// </summary>
+        public float extendRadius = 1.0f;
 
         /// <summary>
-        /// Curve for path.
+        /// Curve for pipe.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of path.
+        /// Curve of pipe.
         /// </summary>
         protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild path.
+        /// Rebuild the mesh of pipe.
         /// </summary>
         public override void Rebuild()
         {
-            curve.ellipse.semiMinorAxis = curve.ellipse.semiMajorAxis = circleRadius;
+            curve.ellipse.semiMinorAxis = curve.ellipse.semiMajorAxis = extendRadius;
             base.Rebuild();
         }
         #endregion

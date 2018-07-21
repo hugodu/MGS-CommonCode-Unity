@@ -2,7 +2,7 @@
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
  *  File         :  EllipsePipe.cs
- *  Description  :  Render dynamic pipe mesh base on circle curve.
+ *  Description  :  Render dynamic pipe mesh base on ellipse curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -16,7 +16,7 @@ using UnityEngine;
 namespace Mogoson.CurvePipe
 {
     /// <summary>
-    /// Render dynamic pipe mesh base on circle curve.
+    /// Render dynamic pipe mesh base on ellipse curve.
     /// </summary>
     [AddComponentMenu("Mogoson/CurvePipe/EllipsePipe")]
     public class EllipsePipe : MonoCurvePipe
@@ -25,38 +25,12 @@ namespace Mogoson.CurvePipe
         /// <summary>
         /// Semi minor axis of ellipse.
         /// </summary>
-        [SerializeField]
-        protected float semiMinorAxis = 1.0f;
-
-        /// <summary>
-        /// Semi minor axis of ellipse.
-        /// </summary>
-        public float SemiMinorAxis
-        {
-            set
-            {
-                semiMinorAxis = value;
-            }
-            get { return semiMinorAxis; }
-        }
+        public float semiMinorAxis = 1.0f;
 
         /// <summary>
         /// Semi major axis of ellipse.
         /// </summary>
-        [SerializeField]
-        protected float semiMajorAxis = 1.5f;
-
-        /// <summary>
-        /// Semi major axis of ellipse.
-        /// </summary>
-        public float SemiMajorAxis
-        {
-            set
-            {
-                semiMajorAxis = value;
-            }
-            get { return semiMajorAxis; }
-        }
+        public float semiMajorAxis = 1.5f;
 
         /// <summary>
         /// Curve for path.

@@ -25,16 +25,16 @@ namespace Mogoson.CurvePipe
     {
         #region Field and Property
         /// <summary>
-        /// Segment of around pipe.
+        /// Polygon of pipe cross section.
         /// </summary>
         [SerializeField]
-        protected int around = 8;
+        protected int polygon = 8;
 
         /// <summary>
-        /// Length of subdivide pipe.
+        /// Segment length of subdivide pipe.
         /// </summary>
         [SerializeField]
-        protected float subdivide = 1;
+        protected float segment = 0.25f;
 
         /// <summary>
         /// Radius of pipe mesh.
@@ -49,21 +49,21 @@ namespace Mogoson.CurvePipe
         protected bool seal = false;
 
         /// <summary>
-        /// Segment of around pipe.
+        /// Polygon of pipe cross section.
         /// </summary>
-        public int AroundSegment
+        public int Polygon
         {
-            set { around = value; }
-            get { return around; }
+            set { polygon = value; }
+            get { return polygon; }
         }
 
         /// <summary>
-        ///  Length of subdivide pipe.
+        ///  Segment length of subdivide pipe.
         /// </summary>
-        public float SubdivideLength
+        public float Segment
         {
-            set { subdivide = value; }
-            get { return subdivide; }
+            set { segment = value; }
+            get { return segment; }
         }
 
         /// <summary>
@@ -109,7 +109,10 @@ namespace Mogoson.CurvePipe
         /// </summary>
         protected const float Delta = 0.001f;
 
-        protected int extend = 0;
+        /// <summary>
+        /// Segment count of subdivide pipe.
+        /// </summary>
+        protected int segmentCount = 0;
         #endregion
 
         #region Protected Method
@@ -120,12 +123,12 @@ namespace Mogoson.CurvePipe
         protected override Vector3[] CreateVertices()
         {
             var vertices = new List<Vector3>();
-            var space = MaxKey / extend;
-            for (int i = 0; i < extend; i++)
+            var keySegment = MaxKey / segmentCount;
+            for (int i = 0; i < segmentCount; i++)
             {
-                var t = i * space;
-                var center = Curve.GetPointAt(t);
-                var tangent = (Curve.GetPointAt(t + Delta) - center).normalized;
+                var key = keySegment * i;
+                var center = Curve.GetPointAt(key);
+                var tangent = (Curve.GetPointAt(key + Delta) - center).normalized;
                 vertices.AddRange(CreateSegmentVertices(center, Quaternion.LookRotation(tangent)));
             }
 
@@ -133,7 +136,7 @@ namespace Mogoson.CurvePipe
             var lastTangent = (lastCenter - Curve.GetPointAt(MaxKey - Delta)).normalized;
             vertices.AddRange(CreateSegmentVertices(lastCenter, Quaternion.LookRotation(lastTangent)));
 
-            if (seal && around > 2)
+            if (seal && polygon > 2)
             {
                 vertices.Add(Curve.GetPointAt(0));
                 vertices.Add(Curve.GetPointAt(MaxKey));
@@ -148,48 +151,48 @@ namespace Mogoson.CurvePipe
         protected override int[] CreateTriangles()
         {
             var triangles = new List<int>();
-            for (int i = 0; i < extend; i++)
+            for (int i = 0; i < segmentCount; i++)
             {
-                for (int j = 0; j < around - 1; j++)
+                for (int j = 0; j < polygon - 1; j++)
                 {
-                    triangles.Add(around * i + j);
-                    triangles.Add(around * i + j + 1);
-                    triangles.Add(around * (i + 1) + j + 1);
+                    triangles.Add(polygon * i + j);
+                    triangles.Add(polygon * i + j + 1);
+                    triangles.Add(polygon * (i + 1) + j + 1);
 
-                    triangles.Add(around * i + j);
-                    triangles.Add(around * (i + 1) + j + 1);
-                    triangles.Add(around * (i + 1) + j);
+                    triangles.Add(polygon * i + j);
+                    triangles.Add(polygon * (i + 1) + j + 1);
+                    triangles.Add(polygon * (i + 1) + j);
                 }
 
-                triangles.Add(around * i);
-                triangles.Add(around * (i + 1));
-                triangles.Add(around * (i + 2) - 1);
+                triangles.Add(polygon * i);
+                triangles.Add(polygon * (i + 1));
+                triangles.Add(polygon * (i + 2) - 1);
 
-                triangles.Add(around * i);
-                triangles.Add(around * (i + 2) - 1);
-                triangles.Add(around * (i + 1) - 1);
+                triangles.Add(polygon * i);
+                triangles.Add(polygon * (i + 2) - 1);
+                triangles.Add(polygon * (i + 1) - 1);
             }
 
-            if (seal && around > 2)
+            if (seal && polygon > 2)
             {
-                for (int i = 0; i < around - 1; i++)
+                for (int i = 0; i < polygon - 1; i++)
                 {
-                    triangles.Add(around * (extend + 1));
+                    triangles.Add(polygon * (segmentCount + 1));
                     triangles.Add(i + 1);
                     triangles.Add(i);
 
-                    triangles.Add(around * (extend + 1) + 1);
-                    triangles.Add(around * extend + i);
-                    triangles.Add(around * extend + i + 1);
+                    triangles.Add(polygon * (segmentCount + 1) + 1);
+                    triangles.Add(polygon * segmentCount + i);
+                    triangles.Add(polygon * segmentCount + i + 1);
                 }
 
-                triangles.Add(around * (extend + 1));
+                triangles.Add(polygon * (segmentCount + 1));
                 triangles.Add(0);
-                triangles.Add(around - 1);
+                triangles.Add(polygon - 1);
 
-                triangles.Add(around * (extend + 1) + 1);
-                triangles.Add(around * (extend + 1) - 1);
-                triangles.Add(around * extend);
+                triangles.Add(polygon * (segmentCount + 1) + 1);
+                triangles.Add(polygon * (segmentCount + 1) - 1);
+                triangles.Add(polygon * segmentCount);
             }
             return triangles.ToArray();
         }
@@ -202,10 +205,10 @@ namespace Mogoson.CurvePipe
         /// <returns>Segment vertices.</returns>
         protected virtual Vector3[] CreateSegmentVertices(Vector3 center, Quaternion rotation)
         {
-            var vertices = new Vector3[around];
-            for (int i = 0; i < around; i++)
+            var vertices = new Vector3[polygon];
+            for (int i = 0; i < polygon; i++)
             {
-                var angle = CircleRadian / around * i;
+                var angle = CircleRadian / polygon * i;
                 var vertice = center + rotation * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
                 vertices[i] = vertice;
             }
@@ -219,7 +222,7 @@ namespace Mogoson.CurvePipe
         /// </summary>
         public override void Rebuild()
         {
-            extend = (int)(Length / subdivide);
+            segmentCount = (int)(Length / segment);
             base.Rebuild();
         }
 

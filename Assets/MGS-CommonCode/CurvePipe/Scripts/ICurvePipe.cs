@@ -21,14 +21,14 @@ namespace Mogoson.CurvePipe
     {
         #region Field and Property
         /// <summary>
-        /// Segment of around pipe.
+        /// Polygon of pipe cross section.
         /// </summary>
-        int AroundSegment { set; get; }
+        int Polygon { set; get; }
 
         /// <summary>
-        /// Length of subdivide pipe.
+        /// Segment length of subdivide pipe.
         /// </summary>
-        float SubdivideLength { set; get; }
+        float Segment { set; get; }
 
         /// <summary>
         /// Radius of pipe mesh.
