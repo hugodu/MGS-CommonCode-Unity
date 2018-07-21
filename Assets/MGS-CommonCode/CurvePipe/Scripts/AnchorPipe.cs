@@ -25,6 +25,11 @@ namespace Mogoson.CurvePipe
     {
         #region Field and Property
         /// <summary>
+        /// Path curve is close?
+        /// </summary>
+        public bool close = false;
+
+        /// <summary>
         /// Anchors of pipe curve.
         /// </summary>
         [SerializeField]
@@ -54,7 +59,7 @@ namespace Mogoson.CurvePipe
         /// </summary>
         public override void Rebuild()
         {
-            curve = VectorAnimationCurve.FromAnchors(anchors.ToArray());
+            curve = VectorAnimationCurve.FromAnchors(anchors.ToArray(), close);
             base.Rebuild();
         }
 
