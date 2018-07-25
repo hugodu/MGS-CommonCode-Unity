@@ -34,6 +34,8 @@ namespace Mogoson.Skin
         /// <summary>
         /// Mesh of skin.
         /// </summary>
+        [HideInInspector]
+        [SerializeField]
         protected Mesh mesh;
 
         /// <summary>
