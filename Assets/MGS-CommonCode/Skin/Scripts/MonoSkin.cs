@@ -34,7 +34,7 @@ namespace Mogoson.Skin
         /// <summary>
         /// Mesh of skin.
         /// </summary>
-        protected Mesh mesh;
+        protected Mesh mesh = new Mesh { name = "Skin" };
 
         /// <summary>
         /// Skinned mesh renderer of skin.
@@ -55,15 +55,13 @@ namespace Mogoson.Skin
         #region Protected Method
         protected virtual void Reset()
         {
-            Awake();
+            Rebuild();
         }
 
         protected virtual void Awake()
         {
             meshRenderer = GetComponent<SkinnedMeshRenderer>();
             meshCollider = GetComponent<MeshCollider>();
-
-            mesh = new Mesh { name = "Skin" };
             Rebuild();
         }
 
@@ -86,6 +84,13 @@ namespace Mogoson.Skin
         /// </summary>
         public virtual void Rebuild()
         {
+#if UNITY_EDITOR
+            if (meshRenderer == null)
+                meshRenderer = GetComponent<SkinnedMeshRenderer>();
+
+            if (meshCollider == null)
+                meshCollider = GetComponent<MeshCollider>();
+#endif
             mesh.Clear();
             mesh.vertices = CreateVertices();
             mesh.triangles = CreateTriangles();
@@ -127,25 +132,6 @@ namespace Mogoson.Skin
                 meshCollider = null;
             }
         }
-
-#if UNITY_EDITOR
-        /// <summary>
-        /// Rebuild the mesh of skin in editor (Only call this method in editor script).
-        /// </summary>
-        public void RebuildInEditor()
-        {
-            if (meshRenderer == null)
-                meshRenderer = GetComponent<SkinnedMeshRenderer>();
-
-            if (meshCollider == null)
-                meshCollider = GetComponent<MeshCollider>();
-
-            if (mesh == null)
-                mesh = new Mesh { name = "Skin" };
-
-            Rebuild();
-        }
-#endif
         #endregion
     }
 }
