@@ -34,7 +34,7 @@ namespace Mogoson.Skin
         /// <summary>
         /// Mesh of skin.
         /// </summary>
-        protected Mesh mesh = new Mesh { name = "Skin" };
+        protected Mesh mesh;
 
         /// <summary>
         /// Skinned mesh renderer of skin.
@@ -62,6 +62,8 @@ namespace Mogoson.Skin
         {
             meshRenderer = GetComponent<SkinnedMeshRenderer>();
             meshCollider = GetComponent<MeshCollider>();
+            mesh = new Mesh { name = "Skin" };
+
             Rebuild();
         }
 
@@ -90,6 +92,9 @@ namespace Mogoson.Skin
 
             if (meshCollider == null)
                 meshCollider = GetComponent<MeshCollider>();
+
+            if (mesh == null)
+                mesh = new Mesh { name = "Skin" };
 #endif
             mesh.Clear();
             mesh.vertices = CreateVertices();
