@@ -305,7 +305,7 @@ namespace Mogoson.Converter
     public static class StructureConverter
     {
         /// <summary>
-        /// Byte array to object.
+        /// Byte array to structure.
         /// </summary>
         /// <typeparam name="T">Structure type.</typeparam>
         /// <param name="byteArray">Byte array.</param>
@@ -321,9 +321,9 @@ namespace Mogoson.Converter
 
             IntPtr intPtr = Marshal.AllocHGlobal(size);
             Marshal.Copy(byteArray, 0, intPtr, size);
-            var sObject = (T)Marshal.PtrToStructure(intPtr, typeof(T));
+            var structure = (T)Marshal.PtrToStructure(intPtr, typeof(T));
             Marshal.FreeHGlobal(intPtr);
-            return sObject;
+            return structure;
         }
 
         /// <summary>
