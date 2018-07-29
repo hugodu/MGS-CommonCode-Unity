@@ -11,6 +11,7 @@
  *************************************************************************/
 
 using Mogoson.Curve;
+using Mogoson.Mathematics;
 using UnityEngine;
 
 namespace Mogoson.CurvePath
@@ -27,7 +28,7 @@ namespace Mogoson.CurvePath
         /// </summary>
         public float radius = 1.0f;
 
-        public SineInfo sine = new SineInfo(1, 1, 0, 0);
+        public SinArgs sine = new SinArgs(1, 1, 0, 0);
 
         public float maxKey = Mathf.PI * 2;
 

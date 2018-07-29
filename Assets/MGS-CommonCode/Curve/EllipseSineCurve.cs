@@ -10,6 +10,8 @@
  *  Description  :  Initial development version.
  *************************************************************************/
 
+using Mogoson.Mathematics;
+using System;
 using UnityEngine;
 
 namespace Mogoson.Curve
@@ -28,7 +30,7 @@ namespace Mogoson.Curve
         /// <summary>
         /// Sine info of curve.
         /// </summary>
-        public SineInfo sine;
+        public SinArgs sine;
 
         /// <summary>
         /// Length of curve.
@@ -54,14 +56,14 @@ namespace Mogoson.Curve
         public EllipseSineCurve()
         {
             ellipse = new EllipseInfo();
-            sine = new SineInfo();
+            sine = new SinArgs();
         }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="ellipse">Ellipse info of curve.</param>
-        public EllipseSineCurve(EllipseInfo ellipse, SineInfo sine)
+        public EllipseSineCurve(EllipseInfo ellipse, SinArgs sine)
         {
             this.ellipse = ellipse;
             this.sine = sine;
@@ -85,10 +87,10 @@ namespace Mogoson.Curve
         /// <param name="ellipse">Ellipse info of curve.</param>
         /// <param name="radian">Around radian of ellipse.</param>
         /// <returns>The point on ellipse at around radian.</returns>
-        public static Vector3 GetPointAt(EllipseInfo ellipse, SineInfo sine, float radian)
+        public static Vector3 GetPointAt(EllipseInfo ellipse, SinArgs sine, float radian)
         {
             var ellipsePos = ellipse.center + new Vector3(0, ellipse.semiMinorAxis * Mathf.Cos(radian), ellipse.semiMajorAxis * Mathf.Sin(radian));
-            var sinPos = new Vector3(sine.amplitude * Mathf.Sin(sine.angular * radian + sine.phase) + sine.setover, 0);
+            var sinPos = new Vector3((float)(sine.amplitude * Math.Sin(sine.angular * radian + sine.phase) + sine.setover), 0);
             return ellipsePos + sinPos;
         }
         #endregion

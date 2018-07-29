@@ -11,6 +11,7 @@
  *************************************************************************/
 
 using Mogoson.Curve;
+using Mogoson.Mathematics;
 using UnityEngine;
 
 namespace Mogoson.CurvePath
@@ -22,7 +23,7 @@ namespace Mogoson.CurvePath
     public class SinePath : MonoCurvePath
     {
         #region Field and Property
-        public SineInfo sine = new SineInfo(1, 1, 0, 0);
+        public SinArgs sine = new SinArgs(1, 1, 0, 0);
 
         public float maxKey = 1;
 
@@ -34,7 +35,7 @@ namespace Mogoson.CurvePath
         /// <summary>
         /// Curve of path.
         /// </summary>
-        protected SineCurve curve = new SineCurve();
+        protected USinCurve curve = new USinCurve();
         #endregion
 
         #region Public Method
@@ -43,7 +44,7 @@ namespace Mogoson.CurvePath
         /// </summary>
         public override void Rebuild()
         {
-            curve.sine = sine;
+            curve.args = sine;
             curve.MaxKey = maxKey;
         }
         #endregion

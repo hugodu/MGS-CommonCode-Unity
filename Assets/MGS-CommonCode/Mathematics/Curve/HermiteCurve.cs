@@ -79,38 +79,6 @@ namespace Mogoson.Mathematics
     /// </summary>
     public class HermiteCurve
     {
-        /*  Hermite Polynomial Structure
-         *  Base: H(t) = v0a0(t) + v1a1(t) + m0b0(t) + m1b1(t)
-         * 
-         *                     t-t0    t-t1  2
-         *        a0(t) = (1+2------)(------)
-         *                     t1-t0   t0-t1
-         *                    
-         *                     t-t1    t-t0  2
-         *        a1(t) = (1+2------)(------)
-         *                     t0-t1   t1-t0
-         * 
-         *                        t-t1  2
-         *        b0(t) = (t-t0)(------)
-         *                        t0-t1
-         * 
-         *                        t-t0  2
-         *        b1(t) = (t-t1)(------)
-         *                        t1-t0
-         * 
-         *  Let:  d0 = t-t0, d1 = t-t1, d = t0-t1
-         * 
-         *              d0          d1
-         *        q0 = ---- , q1 = ----
-         *              d           d
-         * 
-         *               t-t1  2     d1  2     2          t-t0  2     d0  2     2
-         *        p0 = (------)  = (----)  = q1  , p1 = (------)  = (----)  = q0
-         *               t0-t1       d                    t1-t0       -d
-         * 
-         *  Get:  H(t) = (1-2q0)v0p0 + (1+2q1)v1p1 + mod0p0 + m1d1p1
-         */
-
         #region Indexer
         /// <summary>
         /// Indexer.
@@ -135,46 +103,6 @@ namespace Mogoson.Mathematics
         public int KeyFramesCount { get { return frames.Count; } }
         #endregion
 
-        #region Protected Method
-        /// <summary>
-        /// Evaluate the value of hermite curve at time.
-        /// </summary>
-        /// <param name="t0">Time of start key frame.</param>
-        /// <param name="t1">Time of end key frame.</param>
-        /// <param name="v0">Value of start key frame.</param>
-        /// <param name="v1">Value of end key frame.</param>
-        /// <param name="m0">Micro quotient value of start key frame.</param>
-        /// <param name="m1">Micro quotient value of end key frame.</param>
-        /// <param name="t">Time of curve to evaluate value.</param>
-        /// <returns>The value of hermite curve at time.</returns>
-        protected double Evaluate(double t0, double t1, double v0, double v1, double m0, double m1, double t)
-        {
-            var d0 = t - t0;
-            var d1 = t - t1;
-            var d = t0 - t1;
-
-            var q0 = d0 / d;
-            var q1 = d1 / d;
-
-            var p0 = q1 * q1;
-            var p1 = q0 * q0;
-
-            return (1 - 2 * q0) * v0 * p0 + (1 + 2 * q1) * v1 * p1 + m0 * d0 * p0 + m1 * d1 * p1;
-        }
-
-        /// <summary>
-        /// Evaluate the value of hermite curve at time on the range from start key frame to end key frame.
-        /// </summary>
-        /// <param name="start">Start key frame of hermite curve.</param>
-        /// <param name="end">End key frame of hermite curve.</param>
-        /// <param name="t">Time of curve to evaluate value.</param>
-        /// <returns>The value of hermite curve at time on the range from start key frame to end key frame.</returns>
-        protected double Evaluate(KeyFrame start, KeyFrame end, double t)
-        {
-            return Evaluate(start.time, end.time, start.value, end.value, start.outTangent, end.inTangent, t);
-        }
-        #endregion
-
         #region Public Method
         /// <summary>
         /// Constructor.
@@ -192,37 +120,7 @@ namespace Mogoson.Mathematics
         /// <returns>The value of hermite curve at time.</returns>
         public double Evaluate(double t)
         {
-            if (frames.Count == 0)
-                return 0;
-            else if (frames.Count == 1)
-                return frames[0].value;
-            else
-            {
-                if (t <= frames[0].time)
-                {
-                    return frames[0].value;
-                }
-                else if (t >= frames[frames.Count - 1].time)
-                {
-                    return frames[frames.Count - 1].value;
-                }
-                else
-                {
-                    var near = 0;
-                    for (int i = 0; i < frames.Count; i++)
-                    {
-                        if (i == frames[i].time)
-                            return frames[i].value;
-
-                        if (t > frames[i].time && t < frames[i + 1].time)
-                        {
-                            near = i;
-                            break;
-                        }
-                    }
-                    return Evaluate(frames[near], frames[near + 1], t);
-                }
-            }
+            return Evaluate(frames.ToArray(), t);
         }
 
         /// <summary>
@@ -251,6 +149,61 @@ namespace Mogoson.Mathematics
         public void RemoveKeyFrameAt(int index)
         {
             frames.RemoveAt(index);
+        }
+        #endregion
+
+        #region Static Method
+        /// <summary>
+        /// Evaluate the value of hermite curve at time on the range from start key frame to end key frame.
+        /// </summary>
+        /// <param name="start">Start key frame of hermite curve.</param>
+        /// <param name="end">End key frame of hermite curve.</param>
+        /// <param name="t">Time of curve to evaluate value.</param>
+        /// <returns>The value of hermite curve at time on the range from start key frame to end key frame.</returns>
+        public static double Evaluate(KeyFrame start, KeyFrame end, double t)
+        {
+            return Hermite.Evaluate(start.time, end.time, start.value, end.value, start.outTangent, end.inTangent, t);
+        }
+
+        /// <summary>
+        /// Evaluate the value of hermite curve at time.
+        /// </summary>
+        /// <param name="frames">Key frames of hermite curve.</param>
+        /// <param name="t"></param>
+        /// <returns>The value of hermite curve at time.</returns>
+        public static double Evaluate(KeyFrame[] frames, double t)
+        {
+            if (frames == null || frames.Length == 0)
+                return 0;
+            else if (frames.Length == 1)
+                return frames[0].value;
+            else
+            {
+                if (t <= frames[0].time)
+                {
+                    return frames[0].value;
+                }
+                else if (t >= frames[frames.Length - 1].time)
+                {
+                    return frames[frames.Length - 1].value;
+                }
+                else
+                {
+                    var near = 0;
+                    for (int i = 0; i < frames.Length; i++)
+                    {
+                        if (i == frames[i].time)
+                            return frames[i].value;
+
+                        if (t > frames[i].time && t < frames[i + 1].time)
+                        {
+                            near = i;
+                            break;
+                        }
+                    }
+                    return Evaluate(frames[near], frames[near + 1], t);
+                }
+            }
         }
         #endregion
     }
