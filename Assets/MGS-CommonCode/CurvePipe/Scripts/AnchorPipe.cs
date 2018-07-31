@@ -50,7 +50,7 @@ namespace Mogoson.CurvePipe
         /// <summary>
         /// VectorAnimationCurve of pipe.
         /// </summary>
-        protected VectorAnimationCurve curve = new VectorAnimationCurve();
+        protected UHermiteCurve curve = new UHermiteCurve();
         #endregion
 
         #region Public Method
@@ -59,7 +59,7 @@ namespace Mogoson.CurvePipe
         /// </summary>
         public override void Rebuild()
         {
-            curve = VectorAnimationCurve.FromAnchors(anchors.ToArray(), close);
+            curve = UHermiteCurve.FromAnchors(anchors.ToArray(), close);
             base.Rebuild();
         }
 

@@ -58,7 +58,7 @@ namespace Mogoson.CurvePath
         /// <summary>
         /// Curve of path.
         /// </summary>
-        protected VectorAnimationCurve curve = new VectorAnimationCurve();
+        protected UHermiteCurve curve = new UHermiteCurve();
         #endregion
 
         #region Public Method
@@ -67,7 +67,7 @@ namespace Mogoson.CurvePath
         /// </summary>
         public override void Rebuild()
         {
-            curve = VectorAnimationCurve.FromAnchors(anchors.ToArray(), close);
+            curve = UHermiteCurve.FromAnchors(anchors.ToArray(), close);
         }
         
         /// <summary>

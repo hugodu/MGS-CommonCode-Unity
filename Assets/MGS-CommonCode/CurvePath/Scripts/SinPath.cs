@@ -1,8 +1,8 @@
 ﻿/*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  SinePath.cs
- *  Description  :  Define path base on sine curve.
+ *  File         :  SinPath.cs
+ *  Description  :  Define path base on sin curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -17,15 +17,21 @@ using UnityEngine;
 namespace Mogoson.CurvePath
 {
     /// <summary>
-    /// Path base on sine curve.
+    /// Path base on sin curve.
     /// </summary>
-    [AddComponentMenu("Mogoson/CurvePath/SinePath")]
-    public class SinePath : MonoCurvePath
+    [AddComponentMenu("Mogoson/CurvePath/SinPath")]
+    public class SinPath : MonoCurvePath
     {
         #region Field and Property
-        public SinArgs sine = new SinArgs(1, 1, 0, 0);
+        /// <summary>
+        /// Args of sin curve.
+        /// </summary>
+        public SinArgs args = new SinArgs(1, 1, 0, 0);
 
-        public float maxKey = 1;
+        /// <summary>
+        /// Max key of sin curve.
+        /// </summary>
+        public float maxKey = 2 * Mathf.PI;
 
         /// <summary>
         /// Curve for path.
@@ -44,7 +50,7 @@ namespace Mogoson.CurvePath
         /// </summary>
         public override void Rebuild()
         {
-            curve.args = sine;
+            curve.args = args;
             curve.MaxKey = maxKey;
         }
         #endregion

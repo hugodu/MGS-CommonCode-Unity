@@ -33,7 +33,6 @@ namespace Mogoson.Curve
         {
             get
             {
-                //可以简化：取1/4段 S 曲线进行积分
                 var length = 0.0f;
                 for (float key = 0; key < MaxKey; key += Delta)
                 {

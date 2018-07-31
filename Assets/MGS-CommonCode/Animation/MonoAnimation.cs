@@ -12,7 +12,7 @@
 
 using UnityEngine;
 
-namespace Mogoson.Animation
+namespace Mogoson.UAnimation
 {
     /// <summary>
     /// Mono animation.
