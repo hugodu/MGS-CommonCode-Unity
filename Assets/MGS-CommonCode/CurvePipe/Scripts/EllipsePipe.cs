@@ -33,19 +33,19 @@ namespace Mogoson.CurvePipe
         public float semiMajorAxis = 1.5f;
 
         /// <summary>
-        /// Curve for path.
+        /// Curve for pipe.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of path.
+        /// Curve of pipe.
         /// </summary>
         protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild path.
+        /// Rebuild pipe.
         /// </summary>
         public override void Rebuild()
         {

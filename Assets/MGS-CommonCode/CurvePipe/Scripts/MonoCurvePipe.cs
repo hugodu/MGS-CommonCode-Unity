@@ -95,7 +95,7 @@ namespace Mogoson.CurvePipe
         public virtual float Length { get { return length; } }
 
         /// <summary>
-        /// Curve for path.
+        /// Curve for pipe.
         /// </summary>
         protected abstract ICurve Curve { get; }
 

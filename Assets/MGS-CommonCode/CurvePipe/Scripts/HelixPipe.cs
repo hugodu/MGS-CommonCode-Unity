@@ -50,7 +50,7 @@ namespace Mogoson.CurvePipe
 
         #region Public Method
         /// <summary>
-        /// Rebuild path.
+        /// Rebuild pipe.
         /// </summary>
         public override void Rebuild()
         {
