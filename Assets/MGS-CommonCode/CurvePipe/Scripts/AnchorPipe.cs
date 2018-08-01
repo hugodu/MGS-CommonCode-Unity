@@ -25,7 +25,7 @@ namespace Mogoson.CurvePipe
     {
         #region Field and Property
         /// <summary>
-        /// Path curve is close?
+        /// Pipe curve is close?
         /// </summary>
         public bool close = false;
 

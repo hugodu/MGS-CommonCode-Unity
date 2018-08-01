@@ -90,9 +90,9 @@ namespace Mogoson.CurvePipe
         public virtual float MaxKey { get { return Curve.MaxKey; } }
 
         /// <summary>
-        /// Length of path center curve.
+        /// Length of pipe center curve.
         /// </summary>
-        public virtual float Length { get { return Curve.Length; } }
+        public virtual float Length { get { return length; } }
 
         /// <summary>
         /// Curve for path.
@@ -108,6 +108,11 @@ namespace Mogoson.CurvePipe
         /// Delta to calculate tangent.
         /// </summary>
         protected const float Delta = 0.001f;
+
+        /// <summary>
+        /// Length of pipe center curve.
+        /// </summary>
+        protected float length = 0.0f;
 
         /// <summary>
         /// Segment count of subdivide pipe.
@@ -222,7 +227,8 @@ namespace Mogoson.CurvePipe
         /// </summary>
         public override void Rebuild()
         {
-            segmentCount = (int)(Length / segment);
+            length = Curve.Length;
+            segmentCount = (int)(length / segment);
             base.Rebuild();
         }
 
