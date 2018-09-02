@@ -1,8 +1,8 @@
 ﻿/*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  EllipsePipe.cs
- *  Description  :  Render dynamic pipe mesh base on ellipse curve.
+ *  File         :  EllipseHose.cs
+ *  Description  :  Render dynamic hose mesh base on ellipse curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -13,13 +13,13 @@
 using Mogoson.Curve;
 using UnityEngine;
 
-namespace Mogoson.CurvePipe
+namespace Mogoson.CurveHose
 {
     /// <summary>
-    /// Render dynamic pipe mesh base on ellipse curve.
+    /// Render dynamic hose mesh base on ellipse curve.
     /// </summary>
-    [AddComponentMenu("Mogoson/CurvePipe/EllipsePipe")]
-    public class EllipsePipe : MonoCurvePipe
+    [AddComponentMenu("Mogoson/CurveHose/EllipseHose")]
+    public class EllipseHose : MonoCurveHose
     {
         #region Field and Property
         /// <summary>
@@ -33,19 +33,19 @@ namespace Mogoson.CurvePipe
         public float semiMajorAxis = 1.5f;
 
         /// <summary>
-        /// Curve for pipe.
+        /// Curve for hose.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of pipe.
+        /// Curve of hose.
         /// </summary>
         protected EllipseCurve curve = new EllipseCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild pipe.
+        /// Rebuild hose.
         /// </summary>
         public override void Rebuild()
         {

@@ -1,8 +1,8 @@
 /*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  SinPipe.cs
- *  Description  :  Render dynamic pipe mesh base on sin curve.
+ *  File         :  SinHose.cs
+ *  Description  :  Render dynamic hose mesh base on sin curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -13,13 +13,13 @@
 using Mogoson.Curve;
 using UnityEngine;
 
-namespace Mogoson.CurvePipe
+namespace Mogoson.CurveHose
 {
     /// <summary>
-    /// Render dynamic pipe mesh base on sin curve.
+    /// Render dynamic hose mesh base on sin curve.
     /// </summary>
-    [AddComponentMenu("Mogoson/CurvePipe/SinPipe")]
-    public class SinPipe : MonoCurvePipe
+    [AddComponentMenu("Mogoson/CurveHose/SinHose")]
+    public class SinHose : MonoCurveHose
     {
         #region Field and Property
         /// <summary>
@@ -33,19 +33,19 @@ namespace Mogoson.CurvePipe
         public float maxKey = 2 * Mathf.PI;
 
         /// <summary>
-        /// Curve for pipe.
+        /// Curve for hose.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of pipe.
+        /// Curve of hose.
         /// </summary>
         protected SinCurve curve = new SinCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild pipe.
+        /// Rebuild hose.
         /// </summary>
         public override void Rebuild()
         {

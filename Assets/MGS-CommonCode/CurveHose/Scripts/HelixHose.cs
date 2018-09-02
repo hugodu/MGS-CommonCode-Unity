@@ -1,8 +1,8 @@
 ﻿/*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  HelixPipe.cs
- *  Description  :  Render dynamic pipe mesh base on helix curve.
+ *  File         :  HelixHose.cs
+ *  Description  :  Render dynamic hose mesh base on helix curve.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -13,13 +13,13 @@
 using Mogoson.Curve;
 using UnityEngine;
 
-namespace Mogoson.CurvePipe
+namespace Mogoson.CurveHose
 {
     /// <summary>
-    /// Render dynamic pipe mesh base on helix curve.
+    /// Render dynamic hose mesh base on helix curve.
     /// </summary>
-    [AddComponentMenu("Mogoson/CurvePipe/HelixPipe")]
-    public class HelixPipe : MonoCurvePipe
+    [AddComponentMenu("Mogoson/CurveHose/HelixHose")]
+    public class HelixHose : MonoCurveHose
     {
         #region Field and Property
         /// <summary>
@@ -38,19 +38,19 @@ namespace Mogoson.CurvePipe
         public float maxRadian = 6 * Mathf.PI;
 
         /// <summary>
-        /// Curve for pipe.
+        /// Curve for hose.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Curve of pipe.
+        /// Curve of hose.
         /// </summary>
         protected HelixCurve curve = new HelixCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild pipe.
+        /// Rebuild hose.
         /// </summary>
         public override void Rebuild()
         {
