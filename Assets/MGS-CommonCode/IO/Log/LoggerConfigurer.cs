@@ -1,49 +1,46 @@
 /*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  LocalLogger.cs
- *  Description  :  Local logger of system.
+ *  File         :  LoggerConfigurer.cs
+ *  Description  :  Configurer of system logger.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
- *  Date         :  2/19/2018
+ *  Date         :  9/19/2018
  *  Description  :  Initial development version.
  *************************************************************************/
 
-using System;
-using System.IO;
 using UnityEngine;
 
 namespace Mogoson.IO
 {
     /// <summary>
-    /// Local logger of system.
+    /// Configurer of system logger.
     /// </summary>
-    public static class LocalLogger
+    static class LoggerConfigurer
     {
         #region Field and Property
+#if !UNITY_EDITOR
         /// <summary>
         /// Path of log file.
         /// </summary>
-        public static readonly string logPath = Application.persistentDataPath + "/Log.txt";
+        static readonly string FilePath = Application.persistentDataPath + "/Log.txt";
+#endif
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Log content to local file.
+        /// Initialize system logger.
         /// </summary>
-        /// <param name="content">Log content.</param>
-        public static void Log(string content)
+        [RuntimeInitializeOnLoadMethod]
+        static void Initialize()
         {
-            var formatLog = string.Format("[{0}]-{1}\r\n", DateTime.Now, content);
-            try
-            {
-                File.AppendAllText(logPath, formatLog);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
+#if UNITY_EDITOR
+            Logger.Set(UnityDebugger.Instance);
+#else
+            FileLogger.Instance.FilePath = FilePath;
+            Logger.Set(FileLogger.Instance);
+#endif
         }
         #endregion
     }
