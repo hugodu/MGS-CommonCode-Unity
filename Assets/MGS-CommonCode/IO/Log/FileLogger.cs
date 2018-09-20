@@ -19,7 +19,7 @@ namespace Mogoson.IO
     /// <summary>
     /// Loggger for log to local file.
     /// </summary>
-    public class FileLogger : Singleton<FileLogger>, ILogger
+    public sealed class FileLogger : Singleton<FileLogger>, ILogger
     {
         #region Field and Property
         /// <summary>
@@ -47,7 +47,14 @@ namespace Mogoson.IO
             {
                 File.AppendAllText(FilePath, formatLog);
             }
+#if DEBUG
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+#else
             catch { return; }
+#endif
         }
         #endregion
 

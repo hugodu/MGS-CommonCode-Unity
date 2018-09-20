@@ -1,8 +1,8 @@
 /*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  UnityDebugger.cs
- *  Description  :  Debugger for unity editor.
+ *  File         :  VSDebugger.cs
+ *  Description  :  Debugger for visual studio.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -11,20 +11,31 @@
  *************************************************************************/
 
 using Mogoson.DesignPattern;
-using UnityEngine;
+using System.Diagnostics;
 
 namespace Mogoson.IO
 {
     /// <summary>
-    /// Debugger for unity editor.
+    /// Debugger for visual studio.
     /// </summary>
-    public sealed class UnityDebugger : Singleton<UnityDebugger>, ILogger
+    public sealed class VSDebugger : Singleton<VSDebugger>, ILogger
     {
         #region Private Method
         /// <summary>
         /// Constructor.
         /// </summary>
-        private UnityDebugger() { }
+        private VSDebugger() { }
+
+        /// <summary>
+        /// Logs a formatted message.
+        /// </summary>
+        /// <param name="tag">Tag of log message.</param>
+        /// <param name="format">A composite format string.</param>
+        /// <param name="args">Format arguments.</param>
+        private void DebugLog(string tag, string format, params object[] args)
+        {
+            Debug.WriteLine(string.Format("{0} - {1}", tag, string.Format(format, args)));
+        }
         #endregion
 
         #region Public Method
@@ -35,7 +46,7 @@ namespace Mogoson.IO
         /// <param name="args">Format arguments.</param>
         public void Log(string format, params object[] args)
         {
-            Debug.LogFormat(format, args);
+            DebugLog("Log", format, args);
         }
 
         /// <summary>
@@ -45,7 +56,7 @@ namespace Mogoson.IO
         /// <param name="args">Format arguments.</param>
         public void LogError(string format, params object[] args)
         {
-            Debug.LogErrorFormat(format, args);
+            DebugLog("Error", format, args);
         }
 
         /// <summary>
@@ -55,7 +66,7 @@ namespace Mogoson.IO
         /// <param name="args">Format arguments.</param>
         public void LogWarning(string format, params object[] args)
         {
-            Debug.LogWarningFormat(format, args);
+            DebugLog("Warning", format, args);
         }
         #endregion
     }
