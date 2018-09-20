@@ -11,6 +11,7 @@
  *************************************************************************/
 
 using Mogoson.Converter;
+using Mogoson.IO;
 using UnityEngine;
 
 namespace Mogoson.Extension
@@ -33,7 +34,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Debug.LogError("The color array is null or invalid.");
+                Logger.LogError("The color array is null or invalid.");
                 return;
             }
 
@@ -53,7 +54,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Debug.LogError("The color array is null or invalid.");
+                Logger.LogError("The color array is null or invalid.");
                 return;
             }
 
@@ -73,7 +74,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Debug.LogError("The color array is null or invalid.");
+                Logger.LogError("The color array is null or invalid.");
                 return;
             }
 
@@ -93,7 +94,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Debug.LogError("The color array is null or invalid.");
+                Logger.LogError("The color array is null or invalid.");
                 return;
             }
 
