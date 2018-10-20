@@ -229,7 +229,7 @@ namespace Mogoson.Curve
 
             //No anchor.
             if (anchors == null || anchors.Length == 0)
-                Logger.LogWarning("Created a curve with no key frame : The anchors is null or empty.");
+                LogUtility.LogWarning("Created a curve with no key frame: The anchors is null or empty.");
             else
             {
                 //Add frame keys to curve.

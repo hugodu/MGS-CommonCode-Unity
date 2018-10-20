@@ -34,7 +34,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Logger.LogError("The color array is null or invalid.");
+                LogUtility.LogError("The color array is null or invalid.");
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Logger.LogError("The color array is null or invalid.");
+                LogUtility.LogError("The color array is null or invalid.");
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Logger.LogError("The color array is null or invalid.");
+                LogUtility.LogError("The color array is null or invalid.");
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace Mogoson.Extension
         {
             if (colorArray == null || colorArray.Length != texture2D.width * texture2D.height)
             {
-                Logger.LogError("The color array is null or invalid.");
+                LogUtility.LogError("The color array is null or invalid.");
                 return;
             }
 
