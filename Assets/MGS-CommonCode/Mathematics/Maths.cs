@@ -2,7 +2,7 @@
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
  *  File         :  Maths.cs
- *  Description  :  Define math interpolation.
+ *  Description  :  Define mathematical concepts and methods.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
@@ -15,9 +15,9 @@ namespace Mogoson.Mathematics
     /// <summary>
     /// Mathematical concepts and methods.
     /// </summary>
-    public static partial class Maths
+    public static class Maths
     {
-        #region Static Method
+        #region Public Method
         /// <summary>
         /// Interpolates between a and b by t.
         /// </summary>

@@ -17,7 +17,7 @@ namespace Mogoson.Mathematics
     /// </summary>
     public static class Hermite
     {
-        #region Static Method
+        #region Public Method
         /// <summary>
         /// Evaluate the value of hermite curve at time.
         /// </summary>
