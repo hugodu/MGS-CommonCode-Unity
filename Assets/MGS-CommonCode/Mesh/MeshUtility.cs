@@ -65,34 +65,57 @@ namespace Mogoson.UMesh
         /// Create triangles index base on prism.
         /// </summary>
         /// <param name="polygon">Edge count of prism polygon.</param>
-        /// <param name="segment">Segment of prism vertical division.</param>
+        /// <param name="segment">Segment count of prism vertices vertical division.</param>
         /// <param name="start">Start index of prism vertice.</param>
         /// <returns>Triangles index base on prism.</returns>
         public static List<int> CreateTrianglesBasePrism(int polygon, int segment, int start)
         {
             var triangles = new List<int>();
-            var vertices = polygon + 1;
-            var currentStart = 0;
-            var nextStart = 0;
-            for (int s = 0; s < segment; s++)
+            var polygonVs = polygon + 1;
+            var currentSegment = 0;
+            var nextSegment = 0;
+            for (int s = 0; s < segment - 1; s++)
             {
                 // Calculate start index.
-                currentStart = vertices * s;
-                nextStart = vertices * (s + 1);
+                currentSegment = polygonVs * s;
+                nextSegment = polygonVs * (s + 1);
                 for (int p = 0; p < polygon; p++)
                 {
                     // Left-Bottom triangle.
-                    triangles.Add(start + currentStart + p);
-                    triangles.Add(start + currentStart + p + 1);
-                    triangles.Add(start + nextStart + p + 1);
+                    triangles.Add(start + currentSegment + p);
+                    triangles.Add(start + currentSegment + p + 1);
+                    triangles.Add(start + nextSegment + p + 1);
 
                     // Right-Top triangle.
-                    triangles.Add(start + currentStart + p);
-                    triangles.Add(start + nextStart + p + 1);
-                    triangles.Add(start + nextStart + p);
+                    triangles.Add(start + currentSegment + p);
+                    triangles.Add(start + nextSegment + p + 1);
+                    triangles.Add(start + nextSegment + p);
                 }
             }
             return triangles;
+        }
+
+        /// <summary>
+        /// Create UV base on prism.
+        /// </summary>
+        /// <param name="polygon">Edge count of prism polygon.</param>
+        /// <param name="segment">Segment count of prism vertices vertical division.</param>
+        /// <returns>UV base on prism.</returns>
+        public static List<Vector2> CreateUVBasePrism(int polygon, int segment)
+        {
+            var uvs = new List<Vector2>();
+            var polygonVs = polygon + 1;
+            var vertices = polygonVs * segment;
+            var slice = 1.0f / polygon;
+            var u = 0f;
+            var v = 0f;
+            for (int i = 0; i < vertices; i++)
+            {
+                u = slice * (i % polygonVs);
+                v = (i / polygonVs) % 2;
+                uvs.Add(new Vector2(u, v));
+            }
+            return uvs;
         }
         #endregion
     }
