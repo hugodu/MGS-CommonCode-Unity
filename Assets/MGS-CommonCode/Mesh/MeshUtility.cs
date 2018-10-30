@@ -61,6 +61,18 @@ namespace Mogoson.UMesh
             return triangles;
         }
 
+        public static List<int> CreateTrianglesBasePolygon(int edge, int center, int start, bool a)
+        {
+            var triangles = new List<int>();
+            for (int i = 0; i < edge; i++)
+            {
+                triangles.Add(i);
+                triangles.Add(center);
+                triangles.Add(i + 1);
+            }
+            return triangles;
+        }
+
         /// <summary>
         /// Create triangles index base on prism.
         /// </summary>
@@ -96,14 +108,33 @@ namespace Mogoson.UMesh
         }
 
         /// <summary>
-        /// Create UV base on prism.
+        /// Create uv base on polygon.
+        /// </summary>
+        /// <param name="edge">Edge count of polygon.</param>
+        /// <returns>UV base on polygon.</returns>
+        public static List<Vector2> CreateUvBasePolygon(int edge)
+        {
+            var uv = new List<Vector2>();
+            var sector = 2 * Mathf.PI / edge;
+            var radian = 0f;
+            var center = Vector2.one * 0.5f;
+            for (int i = 0; i <= edge; i++)
+            {
+                radian = sector * i;
+                uv.Add(center + new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)) * 0.5f);
+            }
+            return uv;
+        }
+
+        /// <summary>
+        /// Create uv base on prism.
         /// </summary>
         /// <param name="polygon">Edge count of prism polygon.</param>
         /// <param name="segment">Segment count of prism vertices vertical division.</param>
         /// <returns>UV base on prism.</returns>
-        public static List<Vector2> CreateUVBasePrism(int polygon, int segment)
+        public static List<Vector2> CreateUvBasePrism(int polygon, int segment)
         {
-            var uvs = new List<Vector2>();
+            var uv = new List<Vector2>();
             var polygonVs = polygon + 1;
             var vertices = polygonVs * segment;
             var slice = 1.0f / polygon;
@@ -113,9 +144,9 @@ namespace Mogoson.UMesh
             {
                 u = slice * (i % polygonVs);
                 v = (i / polygonVs) % 2;
-                uvs.Add(new Vector2(u, v));
+                uv.Add(new Vector2(u, v));
             }
-            return uvs;
+            return uv;
         }
         #endregion
     }
