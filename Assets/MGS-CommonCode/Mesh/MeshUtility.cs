@@ -102,7 +102,7 @@ namespace Mogoson.UMesh
         /// </summary>
         /// <param name="edge">Edge count of polygon.</param>
         /// <returns>UV base on polygon.</returns>
-        public static List<Vector2> CreateUvBasePolygon(int edge)
+        public static List<Vector2> CreateUVBasePolygon(int edge)
         {
             var uv = new List<Vector2>();
             var sector = 2 * Mathf.PI / edge;
@@ -122,7 +122,7 @@ namespace Mogoson.UMesh
         /// <param name="polygon">Edge count of prism polygon.</param>
         /// <param name="segment">Segment count of prism vertices vertical division.</param>
         /// <returns>UV base on prism.</returns>
-        public static List<Vector2> CreateUvBasePrism(int polygon, int segment)
+        public static List<Vector2> CreateUVBasePrism(int polygon, int segment)
         {
             var uv = new List<Vector2>();
             var polygonVs = polygon + 1;

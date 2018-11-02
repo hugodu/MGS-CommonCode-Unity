@@ -39,17 +39,12 @@ namespace Mogoson.Skin
         /// <summary>
         /// Skinned mesh renderer of skin.
         /// </summary>
-        public Renderer Renderer { get { return meshRenderer; } }
+        public SkinnedMeshRenderer Renderer { get { return meshRenderer; } }
 
         /// <summary>
         /// Mesh collider of skin.
         /// </summary>
-        public Collider Collider { get { return meshCollider; } }
-
-        /// <summary>
-        /// Mesh of skin.
-        /// </summary>
-        public Mesh Mesh { get { return mesh; } }
+        public MeshCollider Collider { get { return meshCollider; } }
         #endregion
 
         #region Protected Method
@@ -78,6 +73,12 @@ namespace Mogoson.Skin
         /// </summary>
         /// <returns>Triangles of skin mesh.</returns>
         protected abstract int[] CreateTriangles();
+
+        /// <summary>
+        /// Create uv of skin mesh.
+        /// </summary>
+        /// <returns>UV of skin mesh.</returns>
+        protected abstract Vector2[] CreateUV();
         #endregion
 
         #region Public Method
@@ -99,6 +100,7 @@ namespace Mogoson.Skin
             mesh.Clear();
             mesh.vertices = CreateVertices();
             mesh.triangles = CreateTriangles();
+            mesh.uv = CreateUV();
 
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
