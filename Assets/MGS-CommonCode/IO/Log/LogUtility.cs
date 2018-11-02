@@ -10,8 +10,6 @@
  *  Description  :  Initial development version.
  *************************************************************************/
 
-using System;
-
 namespace Mogoson.IO
 {
     /// <summary>
@@ -58,16 +56,6 @@ namespace Mogoson.IO
         {
             if (Logger != null)
                 Logger.LogWarning(format, args);
-        }
-
-        /// <summary>
-        /// Logs a formatted exception message.
-        /// </summary>
-        /// <param name="exception">Runtime exception.</param>
-        public static void LogException(Exception exception)
-        {
-            if (Logger != null)
-                Logger.LogException(exception);
         }
         #endregion
     }

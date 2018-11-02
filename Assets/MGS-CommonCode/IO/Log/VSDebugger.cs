@@ -11,7 +11,6 @@
  *************************************************************************/
 
 using Mogoson.DesignPattern;
-using System;
 using System.Diagnostics;
 
 namespace Mogoson.IO
@@ -68,15 +67,6 @@ namespace Mogoson.IO
         public void LogWarning(string format, params object[] args)
         {
             DebugLog("Warning", format, args);
-        }
-
-        /// <summary>
-        /// Logs a formatted exception message.
-        /// </summary>
-        /// <param name="exception">Runtime exception.</param>
-        public void LogException(Exception exception)
-        {
-            DebugLog("Exception", "{0}\nStackTrace: {1}", exception.Message, exception.StackTrace);
         }
         #endregion
     }
