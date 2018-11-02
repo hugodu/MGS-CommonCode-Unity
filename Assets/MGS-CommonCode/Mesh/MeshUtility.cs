@@ -48,27 +48,17 @@ namespace Mogoson.UMesh
         /// <param name="edge">Edge count of polygon.</param>
         /// <param name="center">Index of center vertice.</param>
         /// <param name="start">Index of start vertice.</param>
+        /// <param name="clockwise">Triangle indexs is clockwise.</param>
         /// <returns>Triangles base on polygon.</returns>
-        public static List<int> CreateTrianglesBasePolygon(int edge, int center, int start)
+        public static List<int> CreateTrianglesBasePolygon(int edge, int center, int start, bool clockwise = true)
         {
             var triangles = new List<int>();
-            for (int i = 0; i < edge; i++)
+            var offset = clockwise ? 0 : 1;
+            for (int i = 0; i <= edge; i++)
             {
-                triangles.Add(i);
-                triangles.Add(i + 1);
+                triangles.Add(i + offset);
+                triangles.Add(i - offset + 1);
                 triangles.Add(center);
-            }
-            return triangles;
-        }
-
-        public static List<int> CreateTrianglesBasePolygon(int edge, int center, int start, bool a)
-        {
-            var triangles = new List<int>();
-            for (int i = 0; i < edge; i++)
-            {
-                triangles.Add(i);
-                triangles.Add(center);
-                triangles.Add(i + 1);
             }
             return triangles;
         }
