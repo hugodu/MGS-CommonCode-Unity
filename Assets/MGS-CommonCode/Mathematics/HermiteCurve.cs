@@ -107,6 +107,11 @@ namespace Mogoson.Mathematics
         /// <summary>
         /// Constructor.
         /// </summary>
+        public HermiteCurve() { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="frames">Key frames of curve.</param>
         public HermiteCurve(KeyFrame[] frames)
         {

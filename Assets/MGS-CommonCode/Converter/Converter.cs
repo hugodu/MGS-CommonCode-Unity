@@ -36,7 +36,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, bytes.Length - start);
-            bool[] booleanArray = new bool[count];
+            var booleanArray = new bool[count];
             for (var i = 0; i < count; i++)
             {
                 booleanArray[i] = BitConverter.ToBoolean(bytes, start + i);
@@ -59,7 +59,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, (bytes.Length - start) / 2);
-            short[] int16Array = new short[count];
+            var int16Array = new short[count];
             for (var i = 0; i < count; i++)
             {
                 int16Array[i] = BitConverter.ToInt16(bytes, start + i * 2);
@@ -82,7 +82,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, (bytes.Length - start) / 4);
-            int[] int32Array = new int[count];
+            var int32Array = new int[count];
             for (var i = 0; i < count; i++)
             {
                 int32Array[i] = BitConverter.ToInt32(bytes, start + i * 4);
@@ -105,7 +105,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, (bytes.Length - start) / 8);
-            long[] int64Array = new long[count];
+            var int64Array = new long[count];
             for (var i = 0; i < count; i++)
             {
                 int64Array[i] = BitConverter.ToInt64(bytes, start + i * 8);
@@ -128,7 +128,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, (bytes.Length - start) / 2);
-            char[] charArray = new char[count];
+            var charArray = new char[count];
             for (var i = 0; i < count; i++)
             {
                 charArray[i] = BitConverter.ToChar(bytes, start + i * 2);
@@ -151,7 +151,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, (bytes.Length - start) / 4);
-            float[] singleArray = new float[count];
+            var singleArray = new float[count];
             for (var i = 0; i < count; i++)
             {
                 singleArray[i] = BitConverter.ToSingle(bytes, start + i * 4);
@@ -174,7 +174,7 @@ namespace Mogoson.Converter
                 return null;
 
             count = Math.Min(count, (bytes.Length - start) / 8);
-            double[] doubleArray = new double[count];
+            var doubleArray = new double[count];
             for (var i = 0; i < count; i++)
             {
                 doubleArray[i] = BitConverter.ToDouble(bytes, start + i * 8);
@@ -203,7 +203,7 @@ namespace Mogoson.Converter
             if (array == null || array.Length == 0 || row * column != array.Length)
                 return null;
 
-            T[,] twoDArray = new T[row, column];
+            var twoDArray = new T[row, column];
             var index = 0;
             for (var r = 0; r < row; r++)
             {
@@ -230,7 +230,7 @@ namespace Mogoson.Converter
             if (array == null || array.Length == 0 || row * column * layer != array.Length)
                 return null;
 
-            T[,,] threeDArray = new T[layer, row, column];
+            var threeDArray = new T[layer, row, column];
             var index = 0;
             for (var l = 0; l < layer; l++)
             {
@@ -257,7 +257,7 @@ namespace Mogoson.Converter
             if (array == null || array.Length == 0)
                 return null;
 
-            T[] oneDArray = new T[array.Length];
+            var oneDArray = new T[array.Length];
             var index = 0;
             for (var r = 0; r < array.GetLength(0); r++)
             {
@@ -281,7 +281,7 @@ namespace Mogoson.Converter
             if (array == null || array.Length == 0)
                 return null;
 
-            T[] oneDArray = new T[array.Length];
+            var oneDArray = new T[array.Length];
             var index = 0;
             for (var l = 0; l < array.GetLength(0); l++)
             {
@@ -319,7 +319,7 @@ namespace Mogoson.Converter
             if (size > byteArray.Length)
                 return default(T);
 
-            IntPtr intPtr = Marshal.AllocHGlobal(size);
+            var intPtr = Marshal.AllocHGlobal(size);
             Marshal.Copy(byteArray, 0, intPtr, size);
             var structure = (T)Marshal.PtrToStructure(intPtr, typeof(T));
             Marshal.FreeHGlobal(intPtr);
@@ -338,9 +338,9 @@ namespace Mogoson.Converter
             if (size == 0)
                 return null;
 
-            IntPtr intPtr = Marshal.AllocHGlobal(size);
+            var intPtr = Marshal.AllocHGlobal(size);
             Marshal.StructureToPtr(structure, intPtr, true);
-            byte[] byteArray = new byte[size];
+            var byteArray = new byte[size];
             Marshal.Copy(intPtr, byteArray, 0, size);
             Marshal.FreeHGlobal(intPtr);
             return byteArray;
