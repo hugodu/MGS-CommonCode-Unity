@@ -331,16 +331,14 @@ namespace Mogoson.Mathematics
              *      \/ A + B                \/ 1 + k
              */
 
+            var d = 0d;
             if (L1.k == L2.k)
             {
-                var dB = Math.Abs(L2.b - L1.b);
-                if (L1.k == 0 || L1.k == double.PositiveInfinity)
-                    return dB;
-                else
-                    return dB / Math.Sqrt(1 + Math.Pow(L1.k, 2));
+                d = Math.Abs(L2.b - L1.b);
+                if (L1.k != 0 && L1.k != double.PositiveInfinity)
+                    d /= Math.Sqrt(1 + Math.Pow(L1.k, 2));
             }
-            else
-                return 0;
+            return d;
         }
 
         /// <summary>
@@ -362,12 +360,14 @@ namespace Mogoson.Mathematics
              *      \/ A + B                    \/ 1 + k
              */
 
+            var d = 0d;
             if (L.k == 0)
-                return Math.Abs(v.y - L.b);
+                d = Math.Abs(v.y - L.b);
             else if (L.k == double.PositiveInfinity)
-                return Math.Abs(v.x - L.b);
+                d = Math.Abs(v.x - L.b);
             else
-                return Math.Abs(L.k * v.x - v.y + L.b) / Math.Sqrt(1 + Math.Pow(L.k, 2));
+                d = Math.Abs(L.k * v.x - v.y + L.b) / Math.Sqrt(1 + Math.Pow(L.k, 2));
+            return d;
         }
         #endregion
 
@@ -545,8 +545,7 @@ namespace Mogoson.Mathematics
                 }
                 return GetIntersections(c1, new Line(k, b));
             }
-            else
-                return null;
+            return null;
         }
 
         /// <summary>
@@ -615,8 +614,7 @@ namespace Mogoson.Mathematics
                 }
                 return points;
             }
-            else
-                return null;
+            return null;
         }
 
         /// <summary>

@@ -120,9 +120,7 @@ namespace Mogoson.Skin
         /// </summary>
         public void AttachCollider()
         {
-            if (meshCollider)
-                return;
-            else
+            if (meshCollider == null)
             {
                 meshCollider = GetComponent<MeshCollider>();
                 if (meshCollider == null)
