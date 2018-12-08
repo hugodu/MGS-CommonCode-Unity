@@ -53,7 +53,9 @@ namespace Mogoson.UEditor
         {
 #if UNITY_5_5_OR_NEWER
             if (Event.current.type == EventType.Repaint)
+            {
                 CircleCap(0, position, rotation, size, EventType.Repaint);
+            }
 #else
             CircleCap(0, position, rotation, size);
 #endif
@@ -68,7 +70,9 @@ namespace Mogoson.UEditor
         {
 #if UNITY_5_5_OR_NEWER
             if (Event.current.type == EventType.Repaint)
+            {
                 SphereCap(0, position, rotation, size, EventType.Repaint);
+            }
 #else
             SphereCap(0, position, rotation, size);
 #endif
@@ -178,9 +182,13 @@ namespace Mogoson.UEditor
         protected Quaternion GetPivotRotation(Transform transform)
         {
             if (Tools.pivotRotation == PivotRotation.Local)
+            {
                 return transform.rotation;
+            }
             else
+            {
                 return Quaternion.identity;
+            }
         }
 
         protected void MarkSceneDirty()

@@ -46,7 +46,9 @@ namespace Mogoson.Skin
             EditorGUI.BeginChangeCheck();
             DrawDefaultInspector();
             if (EditorGUI.EndChangeCheck())
+            {
                 Target.Rebuild();
+            }
         }
         #endregion
     }

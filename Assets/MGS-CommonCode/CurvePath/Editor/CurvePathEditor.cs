@@ -55,7 +55,9 @@ namespace Mogoson.CurvePath
             EditorGUI.BeginChangeCheck();
             DrawDefaultInspector();
             if (EditorGUI.EndChangeCheck())
+            {
                 Target.Rebuild();
+            }
         }
         #endregion
     }

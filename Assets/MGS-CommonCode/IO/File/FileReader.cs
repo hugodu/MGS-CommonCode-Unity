@@ -30,7 +30,9 @@ namespace Mogoson.IO
         public static int CalculatePageCount(string filePath, int pageSize = 65536)
         {
             if (!File.Exists(filePath) || pageSize <= 0)
+            {
                 return 0;
+            }
 
             using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
@@ -48,16 +50,22 @@ namespace Mogoson.IO
         public static byte[] ReadIndexPageBytes(string filePath, int pageSize = 65536, int pageIndex = 0)
         {
             if (!File.Exists(filePath) || pageSize <= 0 || pageIndex < 0)
+            {
                 return null;
+            }
 
             using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
                 if (!fileStream.CanSeek || !fileStream.CanRead)
+                {
                     return null;
+                }
 
                 var start = pageSize * pageIndex;
                 if (start >= fileStream.Length)
+                {
                     return null;
+                }
 
                 var count = Math.Min(pageSize, fileStream.Length - start);
                 var bytesArray = new byte[count];

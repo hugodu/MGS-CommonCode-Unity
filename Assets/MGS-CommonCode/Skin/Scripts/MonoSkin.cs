@@ -89,13 +89,19 @@ namespace Mogoson.Skin
         {
 #if UNITY_EDITOR
             if (meshRenderer == null)
+            {
                 meshRenderer = GetComponent<SkinnedMeshRenderer>();
+            }
 
             if (meshCollider == null)
+            {
                 meshCollider = GetComponent<MeshCollider>();
+            }
 
             if (mesh == null)
+            {
                 mesh = new Mesh { name = "Skin" };
+            }
 #endif
             mesh.Clear();
             mesh.vertices = CreateVertices();
@@ -120,11 +126,10 @@ namespace Mogoson.Skin
         /// </summary>
         public void AttachCollider()
         {
+            meshCollider = GetComponent<MeshCollider>();
             if (meshCollider == null)
             {
-                meshCollider = GetComponent<MeshCollider>();
-                if (meshCollider == null)
-                    meshCollider = gameObject.AddComponent<MeshCollider>();
+                meshCollider = gameObject.AddComponent<MeshCollider>();
             }
         }
 

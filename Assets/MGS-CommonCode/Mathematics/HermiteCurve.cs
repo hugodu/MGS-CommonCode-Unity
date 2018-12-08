@@ -179,36 +179,44 @@ namespace Mogoson.Mathematics
         public static double Evaluate(KeyFrame[] frames, double t)
         {
             if (frames == null || frames.Length == 0)
+            {
                 return 0;
-            else if (frames.Length == 1)
-                return frames[0].value;
+            }
+
+            var value = 0d;
+            if (frames.Length == 1)
+            {
+                value = frames[0].value;
+            }
             else
             {
                 if (t <= frames[0].time)
                 {
-                    return frames[0].value;
+                    value = frames[0].value;
                 }
                 else if (t >= frames[frames.Length - 1].time)
                 {
-                    return frames[frames.Length - 1].value;
+                    value = frames[frames.Length - 1].value;
                 }
                 else
                 {
-                    var near = 0;
                     for (int i = 0; i < frames.Length; i++)
                     {
                         if (i == frames[i].time)
-                            return frames[i].value;
+                        {
+                            value = frames[i].value;
+                            break;
+                        }
 
                         if (t > frames[i].time && t < frames[i + 1].time)
                         {
-                            near = i;
+                            value = Evaluate(frames[i], frames[i + 1], t);
                             break;
                         }
                     }
-                    return Evaluate(frames[near], frames[near + 1], t);
                 }
             }
+            return value;
         }
         #endregion
     }

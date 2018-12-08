@@ -36,9 +36,13 @@ namespace Mogoson.Machinery
         protected virtual void Update()
         {
             if (Input.GetKey(positive))
+            {
                 mechanism.Drive(velocity, type);
+            }
             else if (Input.GetKey(negative))
+            {
                 mechanism.Drive(-velocity, type);
+            }
         }
         #endregion
     }
