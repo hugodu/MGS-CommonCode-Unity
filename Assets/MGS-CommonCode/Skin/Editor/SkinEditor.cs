@@ -29,7 +29,7 @@ namespace Mogoson.Skin
             if (!Application.isPlaying)
             {
                 Target.Rebuild();
-                Undo.undoRedoPerformed = () => { Target.Rebuild(); };
+                Undo.undoRedoPerformed = () => Target.Rebuild();
             }
         }
 

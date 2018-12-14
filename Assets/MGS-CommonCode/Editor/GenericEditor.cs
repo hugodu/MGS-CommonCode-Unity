@@ -140,11 +140,9 @@ namespace Mogoson.UEditor
         }
 
 #if UNITY_5_5_OR_NEWER
-        protected void DrawFreeMoveHandle(Vector3 position, Quaternion rotation, float size, Vector3 snap,
-            Handles.CapFunction capFunc, Action<Vector3> callback)
+        protected void DrawFreeMoveHandle(Vector3 position, Quaternion rotation, float size, Vector3 snap, Handles.CapFunction capFunc, Action<Vector3> callback)
 #else
-        protected void DrawFreeMoveHandle(Vector3 position, Quaternion rotation, float size, Vector3 snap,
-            Handles.DrawCapFunction capFunc, Action<Vector3> callback)
+        protected void DrawFreeMoveHandle(Vector3 position, Quaternion rotation, float size, Vector3 snap, Handles.DrawCapFunction capFunc, Action<Vector3> callback)
 #endif
         {
             EditorGUI.BeginChangeCheck();
@@ -158,11 +156,9 @@ namespace Mogoson.UEditor
         }
 
 #if UNITY_5_5_OR_NEWER
-        protected void DrawAdaptiveButton(Vector3 position, Quaternion direction, float size, float pickSize,
-            Handles.CapFunction capFunc, Action callback)
+        protected void DrawAdaptiveButton(Vector3 position, Quaternion direction, float size, float pickSize, Handles.CapFunction capFunc, Action callback)
 #else
-        protected void DrawAdaptiveButton(Vector3 position, Quaternion direction, float size, float pickSize,
-            Handles.DrawCapFunction capFunc, Action callback)
+        protected void DrawAdaptiveButton(Vector3 position, Quaternion direction, float size, float pickSize, Handles.DrawCapFunction capFunc, Action callback)
 #endif
         {
             var scale = GetHandleSize(position);
