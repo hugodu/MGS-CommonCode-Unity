@@ -58,8 +58,8 @@ namespace Mogoson.Extension
                 return;
             }
 
-            Color[] cArray = ArrayConverter.ToOneDimention(colorArray);
-            UpdatePixels(texture2D, cArray, mipLevel, updateMipmaps, makeNointerReadable);
+            var colors = ArrayConverter.ToOneDimention(colorArray);
+            UpdatePixels(texture2D, colors, mipLevel, updateMipmaps, makeNointerReadable);
         }
 
         /// <summary>
@@ -98,8 +98,8 @@ namespace Mogoson.Extension
                 return;
             }
 
-            Color32[] cArray = ArrayConverter.ToOneDimention(colorArray);
-            UpdatePixels(texture2D, cArray, mipLevel, updateMipmaps, makeNointerReadable);
+            var colors = ArrayConverter.ToOneDimention(colorArray);
+            UpdatePixels(texture2D, colors, mipLevel, updateMipmaps, makeNointerReadable);
         }
         #endregion
     }

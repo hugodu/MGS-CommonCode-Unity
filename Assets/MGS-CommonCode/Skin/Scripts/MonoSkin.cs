@@ -36,6 +36,12 @@ namespace Mogoson.Skin
         /// </summary>
         protected Mesh mesh;
 
+#if UNITY_EDITOR
+        /// <summary>
+        /// Mono skin is initialized?
+        /// </summary>
+        private bool isInitialized = false;
+#endif
         /// <summary>
         /// Skinned mesh renderer of skin.
         /// </summary>
@@ -55,11 +61,25 @@ namespace Mogoson.Skin
 
         protected virtual void Awake()
         {
+            Initialize();
+            Rebuild();
+        }
+
+        /// <summary>
+        /// Initialize mono skin.
+        /// </summary>
+        protected virtual void Initialize()
+        {
+#if UNITY_EDITOR
+            if (isInitialized)
+            {
+                return;
+            }
+            isInitialized = true;
+#endif
             meshRenderer = GetComponent<SkinnedMeshRenderer>();
             meshCollider = GetComponent<MeshCollider>();
             mesh = new Mesh { name = "Skin" };
-
-            Rebuild();
         }
 
         /// <summary>
@@ -88,19 +108,9 @@ namespace Mogoson.Skin
         public virtual void Rebuild()
         {
 #if UNITY_EDITOR
-            if (meshRenderer == null)
+            if (!Application.isPlaying)
             {
-                meshRenderer = GetComponent<SkinnedMeshRenderer>();
-            }
-
-            if (meshCollider == null)
-            {
-                meshCollider = GetComponent<MeshCollider>();
-            }
-
-            if (mesh == null)
-            {
-                mesh = new Mesh { name = "Skin" };
+                Initialize();
             }
 #endif
             mesh.Clear();
