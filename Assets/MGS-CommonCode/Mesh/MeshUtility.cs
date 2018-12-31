@@ -54,10 +54,10 @@ namespace Mogoson.UMesh
         {
             var triangles = new List<int>();
             var offset = clockwise ? 0 : 1;
-            for (int i = 0; i <= edge; i++)
+            for (int i = 0; i < edge; i++)
             {
-                triangles.Add(i + offset);
-                triangles.Add(i - offset + 1);
+                triangles.Add(start + i + offset);
+                triangles.Add(start + i - offset + 1);
                 triangles.Add(center);
             }
             return triangles;
