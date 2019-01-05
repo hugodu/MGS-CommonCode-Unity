@@ -1,12 +1,12 @@
 ﻿/*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  AnchorHose.cs
- *  Description  :  Render dynamic hose mesh base on anchor curve.
+ *  File         :  HermitePath.cs
+ *  Description  :  Define curve path base on anchors.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
  *  Version      :  0.1.0
- *  Date         :  3/20/2018
+ *  Date         :  2/28/2018
  *  Description  :  Initial development version.
  *************************************************************************/
 
@@ -14,52 +14,56 @@ using Mogoson.Curve;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mogoson.CurveHose
+namespace Mogoson.CurvePath
 {
     /// <summary>
-    /// Render dynamic hose mesh base on anchor curve.
+    /// Path base on anchors.
     /// </summary>
-    [AddComponentMenu("Mogoson/CurveHose/AnchorHose")]
-    public class AnchorHose : MonoCurveHose
+    [AddComponentMenu("Mogoson/CurvePath/HermitePath")]
+    public class HermitePath : MonoCurvePath
     {
         #region Field and Property
         /// <summary>
-        /// Hose curve is close?
+        /// Path curve is close?
         /// </summary>
         public bool close = false;
 
         /// <summary>
-        /// Anchors of hose curve.
+        /// Anchors of path curve.
         /// </summary>
         [SerializeField]
         [HideInInspector]
-        protected List<Vector3> anchors = new List<Vector3>()
-        {
-            new Vector3(1, 1, 1),
-            new Vector3(1, 1, 2),
-            new Vector3(3, 1, 2),
-            new Vector3(3, 1, 3)
-        };
+        protected List<Vector3> anchors = new List<Vector3>() { Vector3.one,
+            new Vector3(1, 1, 2), new Vector3(3, 1, 2), new Vector3(3, 1, 3)};
 
         /// <summary>
-        /// Count of hose curve anchors.
+        /// Count of path curve anchors.
         /// </summary>
         public int AnchorsCount { get { return anchors.Count; } }
 
         /// <summary>
-        /// Curve for hose.
+        /// WrapMode of path curve.
+        /// </summary>
+        public WrapMode WrapMode
+        {
+            set { curve.PreWrapMode = curve.PostWrapMode = value; }
+            get { return curve.PreWrapMode; }
+        }
+
+        /// <summary>
+        /// Curve for path.
         /// </summary>
         protected override ICurve Curve { get { return curve; } }
 
         /// <summary>
-        /// Anchor curve of hose.
+        /// Curve of path.
         /// </summary>
         protected HermiteCurve curve = new HermiteCurve();
         #endregion
 
         #region Public Method
         /// <summary>
-        /// Rebuild the mesh of hose.
+        /// Rebuild path.
         /// </summary>
         public override void Rebuild()
         {
