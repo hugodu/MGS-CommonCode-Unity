@@ -1,7 +1,7 @@
 ﻿/*************************************************************************
  *  Copyright © 2018 Mogoson. All rights reserved.
  *------------------------------------------------------------------------
- *  File         :  SingleMonoBehaviour.cs
+ *  File         :  SingleBehaviour.cs
  *  Description  :  Define the base of single MonoBehaviour.
  *------------------------------------------------------------------------
  *  Author       :  Mogoson
@@ -20,14 +20,13 @@ namespace Mogoson.DesignPattern
     /// </summary>
     /// <typeparam name="T">Specified type.</typeparam>
     [DisallowMultipleComponent]
-    public abstract class SingleMonoBehaviour<T> : MonoBehaviour where T : SingleMonoBehaviour<T>
+    public abstract class SingleBehaviour<T> : MonoBehaviour where T : SingleBehaviour<T>
     {
         #region Field and Property
         /// <summary>
-        /// Makes this gameobject not be destroyed automatically when loading a new scene.
+        /// Sync root of single behaviour.
         /// </summary>
-        [SerializeField]
-        protected bool dontDestroyOnLoad = true;
+        private static readonly object SyncRoot = new object();
 
         /// <summary>
         /// Instance of this MonoBehaviour.
@@ -38,13 +37,15 @@ namespace Mogoson.DesignPattern
             {
                 if (instance == null)
                 {
-                    //Active MonoBehaviour in scene.
-                    instance = FindObjectOfType<T>();
-                    if (instance == null)
+                    lock (SyncRoot)
                     {
-                        //Create agent to attach MonoBehaviour.
-                        instance = new GameObject(typeof(T).Name).AddComponent<T>();
-                        DontDestroyOnLoad(instance.gameObject);
+                        //Active MonoBehaviour in scene.
+                        instance = FindObjectOfType<T>();
+                        if (instance == null)
+                        {
+                            //Create agent to attach MonoBehaviour.
+                            instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                        }
                     }
                 }
                 return instance;
@@ -63,10 +64,6 @@ namespace Mogoson.DesignPattern
             if (instance == null)
             {
                 instance = this as T;
-                if (dontDestroyOnLoad)
-                {
-                    DontDestroyOnLoad(gameObject);
-                }
             }
             else
             {
