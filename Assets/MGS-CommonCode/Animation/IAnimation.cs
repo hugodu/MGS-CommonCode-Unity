@@ -13,16 +13,6 @@
 namespace Mogoson.UAnimation
 {
     /// <summary>
-    /// Loop mode of animation.
-    /// </summary>
-    public enum LoopMode
-    {
-        Once = 0,
-        Loop = 1,
-        PingPong = 2,
-    }
-
-    /// <summary>
     /// Interface of animation.
     /// </summary>
     public interface IAnimation
@@ -46,11 +36,6 @@ namespace Mogoson.UAnimation
 
         #region Method
         /// <summary>
-        /// Init animation.
-        /// </summary>
-        void Init();
-
-        /// <summary>
         /// Play animation.
         /// </summary>
         void Play();
@@ -58,14 +43,14 @@ namespace Mogoson.UAnimation
         /// <summary>
         /// Play animation.
         /// </summary>
-        /// <param name="animation">Animation data.</param>
-        void Play(object animation);
+        /// <param name="data">Animation data.</param>
+        void Play(object data);
 
         /// <summary>
         /// Refresh animation.
         /// </summary>
-        /// <param name="animation">Animation data.</param>
-        void Refresh(object animation);
+        /// <param name="data">Animation data.</param>
+        void Refresh(object data);
 
         /// <summary>
         /// Pause animation.
@@ -83,5 +68,15 @@ namespace Mogoson.UAnimation
         /// </summary>
         void Stop();
         #endregion
+    }
+
+    /// <summary>
+    /// Loop mode of animation.
+    /// </summary>
+    public enum LoopMode
+    {
+        Once = 0,
+        Loop = 1,
+        PingPong = 2,
     }
 }

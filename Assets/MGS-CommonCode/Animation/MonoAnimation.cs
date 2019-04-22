@@ -60,55 +60,53 @@ namespace Mogoson.UAnimation
         }
         #endregion
 
-        #region Protected Method
-        protected virtual void Awake()
-        {
-            Init();
-        }
-        #endregion
-
         #region Public Method
         /// <summary>
-        /// Init animation.
-        /// </summary>
-        public abstract void Init();
-
-        /// <summary>
         /// Play animation.
         /// </summary>
-        public abstract void Play();
-
-        /// <summary>
-        /// Play animation.
-        /// </summary>
-        /// <param name="animation">Animation data.</param>
-        public virtual void Play(object animation)
+        public virtual void Play()
         {
-            Refresh(animation);
+            enabled = IsPlaying = true;
+        }
+
+        /// <summary>
+        /// Play animation.
+        /// </summary>
+        /// <param name="data">Animation data.</param>
+        public virtual void Play(object data)
+        {
+            Refresh(data);
             Play();
         }
 
         /// <summary>
         /// Refresh animation.
         /// </summary>
-        /// <param name="animation">Animation data.</param>
-        public abstract void Refresh(object animation);
+        /// <param name="data">Animation data.</param>
+        public abstract void Refresh(object data);
 
         /// <summary>
         /// Pause animation.
         /// </summary>
-        public abstract void Pause();
+        public virtual void Pause()
+        {
+            enabled = IsPlaying = false;
+        }
 
         /// <summary>
         /// Rewind animation.
         /// </summary>
         /// <param name="progress">Progress of animation in the range[0~1]</param>
-        public abstract void Rewind(float progress);
+        public abstract void Rewind(float progress = 0);
 
         /// <summary>
         /// Stop animation.
         /// </summary>
-        public abstract void Stop();
+        public virtual void Stop()
+        {
+            enabled = IsPlaying = false;
+            Rewind(0);
+        }
         #endregion
     }
 }
